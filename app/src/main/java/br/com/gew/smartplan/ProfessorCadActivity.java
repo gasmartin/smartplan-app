@@ -50,7 +50,7 @@ public class ProfessorCadActivity extends AppCompatActivity {
 
                 if(senha.equals(confirmar)){
                     try{
-                        if(new HttpRequestProfessor().execute(nome, email, senha) != null){
+                        if(new HttpAddProfessor().execute(nome, email, senha).get()){
                             showMessage("Oba! Agora você pode fazer login!");
                             finish();
                         }
@@ -77,17 +77,17 @@ public class ProfessorCadActivity extends AppCompatActivity {
         });
     }
 
-    private class HttpRequestProfessor extends AsyncTask<String, Void, Professor> {
+    private class HttpAddProfessor extends AsyncTask<String, Void, Boolean> {
 
         @Override
-        protected Professor doInBackground(String... strings) {
+        protected Boolean doInBackground(String...strings) {
             professorRestClient = new ProfessorRestClient();
             return professorRestClient.insertProfessor(strings[0], strings[1], strings[2]);
         }
 
         @Override
-        protected void onPostExecute(Professor professor) {
-            super.onPostExecute(professor);
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
         }
     }
 
