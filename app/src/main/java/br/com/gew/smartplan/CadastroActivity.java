@@ -1,18 +1,14 @@
 package br.com.gew.smartplan;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.List;
-
 import br.com.gew.smartplan.client.ProfessorRestClient;
-import br.com.gew.smartplan.model.Professor;
 
-public class ProfessorCadActivity extends AppCompatActivity {
+public class CadastroActivity extends AppCompatActivity {
 
     private ProfessorRestClient professorRestClient;
 
@@ -21,20 +17,20 @@ public class ProfessorCadActivity extends AppCompatActivity {
     private  android.widget.EditText campo_senha;
     private  android.widget.EditText campo_confirmar;
 
-    private  android.widget.Button cadastrar;
-    private  android.widget.Button voltar;
+    private  android.support.v7.widget.CardView cadastrar;
+    private  android.support.v7.widget.CardView voltar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_professor_cad);
+        setContentView(R.layout.activity_cadastro);
 
         campo_nome = findViewById(R.id.campo_nome_cad);
         campo_email = findViewById(R.id.campo_email_cad);
         campo_senha = findViewById(R.id.campo_senha_cad);
         campo_confirmar = findViewById(R.id.campo_confirmar_cad);
 
-        cadastrar = findViewById(R.id.btn_cadastrar);
+        cadastrar = findViewById(R.id.btn_post);
         voltar = findViewById(R.id.btn_cancelar);
 
         cadastrar.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +73,11 @@ public class ProfessorCadActivity extends AppCompatActivity {
         });
     }
 
+    private void showMessage(String message){
+        Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
     private class HttpAddProfessor extends AsyncTask<String, Void, Boolean> {
 
         @Override
@@ -90,9 +91,5 @@ public class ProfessorCadActivity extends AppCompatActivity {
             super.onPostExecute(result);
         }
     }
-
-    private void showMessage(String message){
-        Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
-        toast.show();
-    }
 }
+
