@@ -1,29 +1,36 @@
 package br.com.gew.smartplan.client;
 
+import android.content.SharedPreferences;
+
 import org.json.JSONObject;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.gew.smartplan.activities.MainActivity;
 import br.com.gew.smartplan.model.Professor;
 
 public class ProfessorRestClient {
-    private final String BASE_URL = "http://192.168.0.11:3000/professores/";
+    private final String HOME_URL = "http://192.168.0.9:3000/professor/";
+    private final String AP_URL = "http://192.168.56.1:3000/professor/";
     private RestTemplate restTemplate = new RestTemplate();
+    private Professor professor;
 
     public boolean insertProfessor(String nome, String email, String senha){
-        String url = BASE_URL + "cadastrar";
+        //MODIFICAR PARA A APRESENTAÇÃO
+        String url = HOME_URL + "insert";
         try{
-            Map<String, String> values = new HashMap<>();
-            values.put("nome", nome);
-            values.put("email", email);
-            values.put("senha", senha);
+            //Map<String, String> values = new HashMap<>();
+            //values.put("nome", nome);
+            //values.put("email", email);
+            //values.put("senha", senha);
 
             JSONObject jsonObject = new JSONObject();
             HttpHeaders headers = new HttpHeaders();
@@ -45,18 +52,20 @@ public class ProfessorRestClient {
         }
     }
 
-    public boolean executarLogin(String email, String senha){
-        String url = BASE_URL + "executar_login/" + email + "/" + senha;
+    public Professor executarLogin(String email, String senha){
+        //MODIFICAR PARA A APRESENTAÇÃO
+        String url = HOME_URL + "executar_login/" + email + "/" + senha;
+        professor = Professor.getInstance();
+
         try{
-            //Talvez isso não seja a melhor opção. Mas, por enquanto, funcionará para a apresentação.
-            Professor professor = Professor.getInstance();
             professor = restTemplate.exchange(url, HttpMethod.GET, null,
                     new ParameterizedTypeReference<Professor>() {}).getBody();
+        }
+        catch (RestClientException e){
+            e.printStackTrace();
+            return null;
+        }
 
-            return (professor != null) ? true : false;
-        }
-        catch(Exception ex){
-            return false;
-        }
+        return professor;
     }
 }

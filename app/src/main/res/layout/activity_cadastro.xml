@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CadastroActivity">
+    tools:context=".activities.CadastroActivity">
 
     <TextView
         android:id="@+id/textView2"
@@ -12,67 +12,112 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="57dp"
         android:text="Cadastro de Perfil"
         android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/campo_nome_cad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/campo_nome_cad"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="122dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="42dp"
+        android:layout_marginStart="42dp"
         android:ems="10"
         android:hint="Nome"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/campo_email_cad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/campo_email_cad"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/campo_nome_cad"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginBottom="23dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="42dp"
+        android:layout_marginStart="42dp"
         android:ems="10"
         android:hint="E-mail"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/campo_senha_cad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/campo_nome_cad" />
 
     <EditText
         android:id="@+id/campo_senha_cad"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/campo_email_cad"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginBottom="21dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="42dp"
+        android:layout_marginStart="42dp"
         android:ems="10"
         android:hint="Senha"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/campo_confirmar_cad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/campo_email_cad" />
 
     <EditText
         android:id="@+id/campo_confirmar_cad"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/campo_senha_cad"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginBottom="67dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="42dp"
+        android:layout_marginStart="42dp"
         android:ems="10"
         android:hint="Confirmar Senha"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/btn_post"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/campo_senha_cad" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/btn_post"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="58dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="42dp"
+        android:layout_marginStart="42dp"
         android:clickable="true"
         android:foreground="?android:selectableItemBackground"
         app:cardBackgroundColor="#2270ED"
         app:cardCornerRadius="25dp"
-        app:cardElevation="10dp">
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/campo_confirmar_cad">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -90,33 +135,4 @@
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/btn_cancelar"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="107dp"
-        android:clickable="true"
-        android:foreground="?android:selectableItemBackground"
-        app:cardBackgroundColor="@android:color/holo_red_light"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="10dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Cancelar"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                app:fontFamily="serif" />
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

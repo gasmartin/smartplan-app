@@ -1,6 +1,7 @@
 package br.com.gew.smartplan.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Professor implements Serializable{
 
@@ -11,6 +12,10 @@ public class Professor implements Serializable{
     private String email;
 
     private String senha;
+
+    private List<Turma> turmas;
+
+    private List<Planejamento> planejamentos;
 
     private static Professor instance;
 
@@ -53,5 +58,20 @@ public class Professor implements Serializable{
         this.senha = senha;
     }
 
+    public List<Turma> getTurmas() {
+        return turmas;
+    }
+
+    public void setTurmas(List<Turma> turmas) {
+        this.turmas = turmas;
+    }
+
+    public List<Planejamento> getPlanejamentos() {
+        return planejamentos;
+    }
+
+    public void setPlanejamentos(List<Planejamento> planejamentos) {
+        this.planejamentos = planejamentos;
+    }
 }
 
