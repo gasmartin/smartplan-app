@@ -13,10 +13,6 @@ public class Professor implements Serializable{
 
     private String senha;
 
-    private List<Turma> turmas;
-
-    private List<Planejamento> planejamentos;
-
     private static Professor instance;
 
     public static Professor getInstance() {
@@ -56,22 +52,6 @@ public class Professor implements Serializable{
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public List<Turma> getTurmas() {
-        return turmas;
-    }
-
-    public void setTurmas(List<Turma> turmas) {
-        this.turmas = turmas;
-    }
-
-    public List<Planejamento> getPlanejamentos() {
-        return planejamentos;
-    }
-
-    public void setPlanejamentos(List<Planejamento> planejamentos) {
-        this.planejamentos = planejamentos;
     }
 }
 

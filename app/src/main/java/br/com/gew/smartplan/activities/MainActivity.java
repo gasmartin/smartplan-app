@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         Long verificar = preferences.getLong("professor_id", 0);
 
         if(verificar != 0){
-            showMessage("Tava salvo já, cara!");
             Intent tabbedActivity = new Intent(MainActivity.this, TabbedActivity.class);
             startActivity(tabbedActivity);
         }
@@ -72,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
                         Intent tabbedScreen = new Intent(MainActivity.this, TabbedActivity.class);
                         startActivity(tabbedScreen);
+                        finish();
                     }
                     else{
                         showMessage("E-mail ou senha incorretos.");
