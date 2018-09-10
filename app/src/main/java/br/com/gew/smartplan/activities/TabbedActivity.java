@@ -6,18 +6,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import br.com.gew.smartplan.R;
 
 public class TabbedActivity extends AppCompatActivity {
 
     private Button sair;
-    private RecyclerView recyclerView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -42,8 +39,6 @@ public class TabbedActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        recyclerView = findViewById(R.id.rv_objects);
-
         sair = findViewById(R.id.sair);
         sair.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,8 +54,6 @@ public class TabbedActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        this.moveTaskToBack(true);
-    }
+    public void onBackPressed() { this.moveTaskToBack(true); }
 
 }
