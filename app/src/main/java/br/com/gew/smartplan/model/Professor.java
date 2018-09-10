@@ -3,7 +3,7 @@ package br.com.gew.smartplan.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class Professor implements Serializable{
+public class Professor implements Serializable {
 
     private Long id;
 
@@ -16,7 +16,7 @@ public class Professor implements Serializable{
     private static Professor instance;
 
     public static Professor getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new Professor();
         }
         return instance;
@@ -26,7 +26,7 @@ public class Professor implements Serializable{
         return this.id;
     }
 
-    public void setId(){
+    public void setId() {
         this.id = id;
     }
 
