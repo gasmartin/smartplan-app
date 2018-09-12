@@ -17,7 +17,7 @@
         android:text="SmartPlan"
         android:textSize="26sp"
         android:textStyle="bold"
-        app:fontFamily="serif"
+        app:fontFamily="@font/roboto"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,8 +62,8 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/btn_login"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="26dp"
@@ -99,8 +99,8 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/btn_cadastrar"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="61dp"

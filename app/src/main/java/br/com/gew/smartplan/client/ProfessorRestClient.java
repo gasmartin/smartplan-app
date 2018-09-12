@@ -23,13 +23,8 @@ public class ProfessorRestClient {
     private Professor professor;
 
     public boolean insertProfessor(String nome, String email, String senha){
-        //MODIFICAR PARA A APRESENTAÇÃO
         String url = BASE_URL + "insert";
         try{
-            //Map<String, String> values = new HashMap<>();
-            //values.put("nome", nome);
-            //values.put("email", email);
-            //values.put("senha", senha);
 
             JSONObject jsonObject = new JSONObject();
             HttpHeaders headers = new HttpHeaders();

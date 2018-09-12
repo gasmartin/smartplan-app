@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Long verificar = preferences.getLong("professor_id", 0);
 
         if(verificar != 0){
-            Intent tabbedActivity = new Intent(MainActivity.this, TabbedActivity.class);
+            Intent tabbedActivity = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(tabbedActivity);
         }
 
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
                         editor.commit();
 
-                        Intent tabbedScreen = new Intent(MainActivity.this, TabbedActivity.class);
+                        Intent tabbedScreen = new Intent(MainActivity.this, HomeActivity.class);
                         startActivity(tabbedScreen);
                         finish();
                     }
