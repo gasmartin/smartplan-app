@@ -5,87 +5,85 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.model.Professor;
 import br.com.gew.smartplan.tasks.LoginTask;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    private android.support.v7.widget.CardView btn_login;
-    private android.support.v7.widget.CardView btn_cadastrar;
+    @BindView(R.id.txtUser) EditText txtUser;
+    @BindView(R.id.txtSenha) EditText txtSenha;
 
-    private android.widget.EditText campo_email;
-    private android.widget.EditText campo_senha;
+    @BindView(R.id.btnEntrar) Button btnEntrar;
+    @BindView(R.id.btnCadastrar) Button btnCadastrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
-        Long verificar = preferences.getLong("professor_id", 0);
+        ButterKnife.bind(this);
 
-        if(verificar != 0){
-            Intent tabbedActivity = new Intent(MainActivity.this, HomeActivity.class);
-            startActivity(tabbedActivity);
+        SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        Long verify = preferences.getLong("professor_id", 0);
+
+        if(verify != 0){
+            Intent homeActivity = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(homeActivity);
         }
+    }
 
-        btn_login = findViewById(R.id.btn_login);
-        btn_cadastrar = findViewById(R.id.btn_cadastrar);
+    @OnClick(R.id.btnEntrar)
+    public void fazerLogin(View view){
+        String username, senha;
+        username = txtUser.getText().toString();
+        senha = txtSenha.getText().toString();
 
-        campo_email = findViewById(R.id.campo_email);
-        campo_senha = findViewById(R.id.campo_senha);
-
-        btn_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String email, senha;
-                email = campo_email.getText().toString();
-                senha = campo_senha.getText().toString();
-
-                if("".equals(email) || "".equals(senha)){
-                    showMessage("Todos os campos devem ser preenchidos.");
-                }
-                else{
-                    Professor professor = Professor.getInstance();
-                    try{
-                        professor = new LoginTask().execute(email, senha).get();
-                    }
-                    catch(Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    if(professor != null){
-
-                        SharedPreferences.Editor editor = preferences.edit();
-
-                        editor.putLong("professor_id", professor.getId());
-                        editor.putString("professor_name", professor.getNome());
-                        editor.putString("professor_email", professor.getEmail());
-                        editor.putString("professor_password", professor.getSenha());
-
-                        editor.commit();
-
-                        Intent tabbedScreen = new Intent(MainActivity.this, HomeActivity.class);
-                        startActivity(tabbedScreen);
-                        finish();
-                    }
-                    else{
-                        showMessage("E-mail ou senha incorretos.");
-                    }
-                }
+        if("".equals(username) || "".equals(senha)){
+            showMessage("Todos os campos devem ser preenchidos.");
+        }
+        else{
+            Professor professor = Professor.getInstance();
+            try{
+                professor = new LoginTask().execute(username, senha).get();
             }
-        });
-
-        btn_cadastrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CadastroActivity.class));
+            catch(Exception e) {
+                e.printStackTrace();
             }
-        });
+
+            if(professor != null){
+
+                SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+
+                editor.putLong("professor_id", professor.getId());
+                editor.putString("professor_name", professor.getNome());
+                editor.putString("professor_email", professor.getUsername());
+                editor.putString("professor_password", professor.getSenha());
+
+                editor.commit();
+
+                Intent tabbedScreen = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(tabbedScreen);
+                finish();
+            }
+            else{
+                showMessage("E-mail ou senha incorretos.");
+            }
+        }
+    }
+
+    @OnClick(R.id.btnCadastrar)
+    public void cadastrarUsuario(View view){
+        Intent telaCadastrar = new Intent(MainActivity.this, CadastroActivity.class);
+        startActivity(telaCadastrar);
     }
 
     private void showMessage(String message){

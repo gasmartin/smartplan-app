@@ -9,7 +9,7 @@ public class Professor implements Serializable {
 
     private String nome;
 
-    private String email;
+    private String username;
 
     private String senha;
 
@@ -38,12 +38,12 @@ public class Professor implements Serializable {
         this.nome = nome;
     }
 
-    public String getEmail() {
-        return this.email;
+    public String getUsername() {
+        return this.username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getSenha() {

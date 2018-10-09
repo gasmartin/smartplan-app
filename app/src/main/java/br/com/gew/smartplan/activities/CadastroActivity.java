@@ -1,67 +1,73 @@
 package br.com.gew.smartplan.activities;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.client.ProfessorRestClient;
 import br.com.gew.smartplan.tasks.RegisterTask;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CadastroActivity extends AppCompatActivity {
 
-    private  android.widget.EditText campo_nome;
-    private  android.widget.EditText campo_email;
-    private  android.widget.EditText campo_senha;
-    private  android.widget.EditText campo_confirmar;
+    @BindView(R.id.txtNome) EditText txtNome;
+    @BindView(R.id.txtUser) EditText txtUser;
+    @BindView(R.id.txtSenha) EditText txtSenha;
+    @BindView(R.id.txtConfirmar) EditText txtConfirmar;
 
-    private  android.support.v7.widget.CardView cadastrar;
+    @BindView(R.id.btnCadastrar) Button btnCadastrar;
+    @BindView(R.id.btnCancelar) Button btnCancelar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
-        campo_nome = findViewById(R.id.campo_nome_cad);
-        campo_email = findViewById(R.id.campo_email_cad);
-        campo_senha = findViewById(R.id.campo_senha_cad);
-        campo_confirmar = findViewById(R.id.campo_confirmar_cad);
+        ButterKnife.bind(this);
+    }
 
-        cadastrar = findViewById(R.id.btn_post);
+    @OnClick(R.id.btnCadastrar)
+    public void cadastrarUsuario(View view){
 
-        cadastrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String nome, email, senha, confirmar;
-                nome = campo_nome.getText().toString();
-                email = campo_email.getText().toString();
-                senha = campo_senha.getText().toString();
-                confirmar = campo_confirmar.getText().toString();
+        String nome, username, senha, confirmar;
+        nome = txtNome.getText().toString();
+        username = txtUser.getText().toString();
+        senha = txtSenha.getText().toString();
+        confirmar = txtConfirmar.getText().toString();
 
 
-                if(senha.equals(confirmar)){
-                    try{
-                        if(new RegisterTask().execute(nome, email, senha).get()){
-                            showMessage("Oba! Agora você pode fazer login!");
-                            finish();
-                        }
-                        else{
-                            showMessage("Retornou null");
-                        }
-                    }
-                    catch (Exception ex){
-                        ex.printStackTrace();
-                        showMessage("Opa! Aconteceu alguma coisa estranha.");
-                    }
+        if(senha.equals(confirmar)){
+            try{
+                if(new RegisterTask().execute(nome, username, senha).get()){
+                    showMessage("Oba! Agora você pode fazer login!");
+                    finish();
                 }
                 else{
-                    showMessage("As senhas precisam ser iguais.");
+                    showMessage("Retornou null");
                 }
             }
-        });
+            catch (Exception ex){
+                ex.printStackTrace();
+                showMessage("Opa! Aconteceu alguma coisa estranha.");
+            }
+        }
+        else{
+            showMessage("As senhas precisam ser iguais.");
+        }
+    }
+
+    @OnClick(R.id.btnCancelar)
+    public void cancelar(View view){
+        Intent mainActivity = new Intent(CadastroActivity.this, MainActivity.class);
+        startActivity(mainActivity);
     }
 
     private void showMessage(String message){
