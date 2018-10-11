@@ -18,19 +18,21 @@ import butterknife.OnClick;
 
 public class CadastroActivity extends AppCompatActivity {
 
+    //Inicializando os componentes
     @BindView(R.id.txtNome) EditText txtNome;
     @BindView(R.id.txtUser) EditText txtUser;
     @BindView(R.id.txtSenha) EditText txtSenha;
     @BindView(R.id.txtConfirmar) EditText txtConfirmar;
-
     @BindView(R.id.btnCadastrar) Button btnCadastrar;
     @BindView(R.id.btnCancelar) Button btnCancelar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Normal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
+        //ButterKnife
         ButterKnife.bind(this);
     }
 
@@ -50,9 +52,8 @@ public class CadastroActivity extends AppCompatActivity {
                     showMessage("Oba! Agora você pode fazer login!");
                     finish();
                 }
-                else{
-                    showMessage("Retornou null");
-                }
+                else showMessage("Retornou null");
+
             }
             catch (Exception ex){
                 ex.printStackTrace();

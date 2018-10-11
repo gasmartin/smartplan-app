@@ -22,10 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.CadastroActivity" />
-        <activity
-            android:name=".activities.HomeActivity"
-            android:label="@string/title_activity_home" />
-
+        <activity android:name=".activities.HomeActivity" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

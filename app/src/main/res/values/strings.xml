@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">SmartPlan</string>
     <string name="title_activity_tabbed">TabbedActivity</string>
-    <string name="title_turma">Turmas</string>
-    <string name="title_planejamento">Planejamentos</string>
+    <string name="title_turma">Lista de Turmas</string>
+    <string name="title_planejamento">Lista de Planejamentos</string>
     <string name="title_activity_home">HomeActivity</string>
 
     <!-- TODO: Remove or change this placeholder text -->
