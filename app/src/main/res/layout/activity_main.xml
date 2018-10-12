@@ -7,23 +7,6 @@
     tools:context=".activities.MainActivity"
     tools:layout_editor_absoluteY="25dp">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="76dp"
-        android:layout_marginBottom="46dp"
-        android:text="SmartPlan"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:fontFamily="@font/roboto"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -32,12 +15,13 @@
         android:layout_marginLeft="35dp"
         android:layout_marginEnd="35dp"
         android:layout_marginRight="35dp"
-        android:layout_marginBottom="9dp"
+        android:layout_marginBottom="81dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title">
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <TextView
             android:id="@+id/textView4"
@@ -52,15 +36,12 @@
             android:ems="10"
             android:inputType="textPersonName" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="28dp" />
-
         <TextView
             android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Senha" />
+            android:text="Senha"
+            android:layout_marginTop="20dp"/>
 
         <EditText
             android:id="@+id/txtSenha"
@@ -69,25 +50,32 @@
             android:ems="10"
             android:inputType="textPassword" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="55dp" />
-
         <Button
             android:id="@+id/btnEntrar"
             android:layout_width="match_parent"
             android:layout_height="58dp"
-            android:text="Entrar" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="12dp" />
+            android:text="Entrar"
+            android:layout_marginTop="50dp"/>
 
         <Button
             android:id="@+id/btnCadastrar"
             android:layout_width="match_parent"
             android:layout_height="62dp"
-            android:text="cadastrar" />
+            android:text="cadastrar"
+            android:layout_marginTop="5dp"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="58dp"
+        android:layout_marginBottom="67dp"
+        android:text="Entre com a sua conta ou cadastre-se"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -18,11 +18,11 @@ import br.com.gew.smartplan.activities.MainActivity;
 import br.com.gew.smartplan.model.Professor;
 
 public class ProfessorRestClient {
-    private final String BASE_URL = "http://192.168.0.9:3000/api/professor/";
+    private final String BASE_URL = "http://192.168.0.20:3000/api/professor/";
     private RestTemplate restTemplate = new RestTemplate();
     private Professor professor;
 
-    public boolean insertProfessor(String nome, String email, String senha){
+    public boolean insertProfessor(String nome, String username, String senha){
         String url = BASE_URL + "insert";
         try{
 
@@ -31,7 +31,7 @@ public class ProfessorRestClient {
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             jsonObject.put("nome", nome);
-            jsonObject.put("email", email);
+            jsonObject.put("username", username);
             jsonObject.put("senha", senha);
 
             HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
@@ -46,9 +46,9 @@ public class ProfessorRestClient {
         }
     }
 
-    public Professor executarLogin(String email, String senha){
+    public Professor executarLogin(String username, String senha){
         //MODIFICAR PARA A APRESENTAÇÃO
-        String url = BASE_URL + "executar_login/" + email + "/" + senha;
+        String url = BASE_URL + "executar_login/" + username + "/" + senha;
         professor = Professor.getInstance();
 
         try{

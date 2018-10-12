@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
                 editor.putLong("professor_id", professor.getId());
                 editor.putString("professor_name", professor.getNome());
-                editor.putString("professor_email", professor.getUsername());
+                editor.putString("professor_username", professor.getUsername());
                 editor.putString("professor_password", professor.getSenha());
 
                 editor.commit();
