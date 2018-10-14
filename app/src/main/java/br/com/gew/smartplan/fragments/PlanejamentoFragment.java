@@ -14,6 +14,7 @@ import br.com.gew.smartplan.R;
  */
 public class PlanejamentoFragment extends Fragment {
 
+    private static final String TAG = "PlanejamentoFragment";
 
     public PlanejamentoFragment() {
         // Required empty public constructor

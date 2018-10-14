@@ -1,6 +1,8 @@
 package br.com.gew.smartplan.fragments;
 
 
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,13 +13,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.adapters.TurmaAdapter;
+import br.com.gew.smartplan.client.TurmaRestClient;
+import br.com.gew.smartplan.model.Turma;
+import br.com.gew.smartplan.tasks.TurmaListTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,22 +41,10 @@ public class TurmaFragment extends Fragment {
     private ArrayList<String> nomes = new ArrayList<>();
     private ArrayList<Integer> salas = new ArrayList<>();
 
+    private Long id;
+
     public TurmaFragment() {
 
-    }
-
-    private void init(){
-        nomes.add("IINF31-A");
-        salas.add(13);
-
-        nomes.add("IINF31-B");
-        salas.add(14);
-
-        nomes.add("IINF21-A");
-        salas.add(8);
-
-        nomes.add("IINF21-B");
-        salas.add(9);
     }
 
 
@@ -62,7 +60,27 @@ public class TurmaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvTurmas = getView().findViewById(R.id.rv_turmas);
 
-        init();
+        SharedPreferences preferences = getContext().getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        id = preferences.getLong("professor_id", 0);
+
+        List<Turma> turmaList = null;
+
+        try {
+            turmaList = new TurmaListTask().execute(id).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        if(turmaList != null){
+            Toast.makeText(getContext(), "Diferente", Toast.LENGTH_LONG).show();
+            for (Turma turma : turmaList){
+                nomes.add(turma.getNome());
+                salas.add(turma.getSala());
+            }
+        }
+
         TurmaAdapter adapter = new TurmaAdapter(getContext(), nomes, salas);
         rvTurmas.setAdapter(adapter);
         rvTurmas.setLayoutManager(new LinearLayoutManager(getContext()));

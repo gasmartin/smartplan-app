@@ -32,7 +32,7 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.ViewHolder>{
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.turma_itemlist, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -48,7 +48,7 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.ViewHolder>{
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked on: " + nomes.get(position));
 
-                Toast.makeText(context, nomes.get(position), Toast.LENGTH_SHORT);
+                Toast.makeText(context, nomes.get(position), Toast.LENGTH_SHORT).show();
             }
         });
     }
