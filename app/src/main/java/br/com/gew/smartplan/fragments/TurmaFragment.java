@@ -2,6 +2,8 @@ package br.com.gew.smartplan.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -52,15 +54,17 @@ public class TurmaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: started.");
-
-        rvTurmas = getView().findViewById(R.id.rv_turmas);
-
-        init();
-        //TurmaAdapter adapter = new TurmaAdapter(getContext(), nomes, salas);
-        //rvTurmas.setAdapter(adapter);
-        //rvTurmas.setLayoutManager(new LinearLayoutManager(getContext()));
-
         return inflater.inflate(R.layout.fragment_turma, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        rvTurmas = getView().findViewById(R.id.rv_turmas);
+
+        init();
+        TurmaAdapter adapter = new TurmaAdapter(getContext(), nomes, salas);
+        rvTurmas.setAdapter(adapter);
+        rvTurmas.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
 }
