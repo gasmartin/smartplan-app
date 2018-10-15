@@ -16,9 +16,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".activities.CadastroActivity" />
@@ -29,7 +28,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".activities.AddTurmaActivity" />
-        <activity android:name=".activities.AddPlanejamentoActivity"></activity>
+        <activity android:name=".activities.AddPlanejamentoActivity"/>
     </application>
 
 </manifest>

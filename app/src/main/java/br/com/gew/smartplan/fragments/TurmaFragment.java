@@ -51,7 +51,6 @@ public class TurmaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: started.");
         return inflater.inflate(R.layout.fragment_turma, container, false);
     }
 
@@ -74,11 +73,13 @@ public class TurmaFragment extends Fragment {
         }
 
         if(turmaList != null){
-            Toast.makeText(getContext(), "Diferente", Toast.LENGTH_LONG).show();
             for (Turma turma : turmaList){
                 nomes.add(turma.getNome());
                 salas.add(turma.getSala());
             }
+        }
+        else{
+            Toast.makeText(getContext(), "Tá vazio, jão", Toast.LENGTH_SHORT).show();
         }
 
         TurmaAdapter adapter = new TurmaAdapter(getContext(), nomes, salas);
