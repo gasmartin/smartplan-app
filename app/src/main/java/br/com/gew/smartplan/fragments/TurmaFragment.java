@@ -79,6 +79,9 @@ public class TurmaFragment extends Fragment {
             }
         }
 
+        Log.d("Fragment", Integer.toString(nomes.size()));
+        Log.d("Fragment", Integer.toString(salas.size()));
+
         TurmaAdapter adapter = new TurmaAdapter(getContext(), nomes, salas);
         rvTurmas.setAdapter(adapter);
         rvTurmas.setLayoutManager(new LinearLayoutManager(getContext()));

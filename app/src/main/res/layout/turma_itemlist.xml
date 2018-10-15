@@ -30,7 +30,7 @@
         android:layout_marginLeft="34dp"
         android:layout_marginTop="53dp"
         android:layout_marginBottom="20dp"
-        android:text="Número da sala: 14"
+        android:text="Número da sala: 0"
         android:textSize="14sp" />
 
 </RelativeLayout>
