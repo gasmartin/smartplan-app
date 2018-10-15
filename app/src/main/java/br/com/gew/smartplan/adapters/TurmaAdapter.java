@@ -42,12 +42,11 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.ViewHolder>{
         Log.d(TAG, "onBindViewHolder: called.");
 
         holder.nomeTurma.setText(nomes.get(position));
-        holder.salaTurma.setText(Integer.toString(salas.get(position)));
+        //holder.salaTurma.setText(salas.get(position));
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked on: " + nomes.get(position));
-
                 Toast.makeText(context, nomes.get(position), Toast.LENGTH_SHORT).show();
             }
         });

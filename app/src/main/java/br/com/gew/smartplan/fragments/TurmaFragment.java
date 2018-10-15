@@ -78,9 +78,6 @@ public class TurmaFragment extends Fragment {
                 salas.add(turma.getSala());
             }
         }
-        else{
-            Toast.makeText(getContext(), "Tá vazio, jão", Toast.LENGTH_SHORT).show();
-        }
 
         TurmaAdapter adapter = new TurmaAdapter(getContext(), nomes, salas);
         rvTurmas.setAdapter(adapter);
