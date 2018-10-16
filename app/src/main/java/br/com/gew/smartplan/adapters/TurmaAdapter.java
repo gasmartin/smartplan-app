@@ -43,7 +43,7 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.ViewHolder>{
 
         holder.nomeTurma.setText(nomes.get(position));
         //if(holder.salaTurma == null) Log.d(TAG, "Masoq??");
-        //holder.salaTurma.setText(Integer.toString(salas.get(position)));
+        holder.salaTurma.setText(Integer.toString(salas.get(position)));
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
