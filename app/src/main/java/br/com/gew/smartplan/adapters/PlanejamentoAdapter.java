@@ -41,12 +41,7 @@ public class PlanejamentoAdapter extends RecyclerView.Adapter<PlanejamentoAdapte
         Log.d(TAG, "onBindViewHolder: called.");
 
         holder.nomePlanejamento.setText(nomes.get(position));
-        holder.deletar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "DELETAR", Toast.LENGTH_SHORT).show();
-            }
-        });
+
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,13 +60,11 @@ public class PlanejamentoAdapter extends RecyclerView.Adapter<PlanejamentoAdapte
 
         private RelativeLayout parentLayout;
         private TextView nomePlanejamento;
-        private ImageButton deletar;
 
         public ViewHolder(View itemView) {
             super(itemView);
             parentLayout = itemView.findViewById(R.id.parent_layout_plan);
             nomePlanejamento = itemView.findViewById(R.id.planejamento_nome);
-            deletar = itemView.findViewById(R.id.action_delete);
         }
     }
 }

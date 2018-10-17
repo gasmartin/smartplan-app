@@ -56,11 +56,40 @@
             android:ems="10"
             android:inputType="textMultiLine" />
 
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Data de Início"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/data_inicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Inserir data..." />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Data Final"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/data_final"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Inserir data..." />
+
         <Button
             android:id="@+id/insert_planejamento"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="59dp"
             android:layout_marginTop="50dp"
             android:text="Inserir" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

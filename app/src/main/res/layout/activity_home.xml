@@ -55,7 +55,7 @@
             android:layout_gravity="bottom|end"
             app:srcCompat="@drawable/ic_action_add"
             android:clickable="true"
-            android:backgroundTint="@color/colorPrimary"/>
+            android:backgroundTint="@color/colorAccent"/>
     </android.support.design.widget.CoordinatorLayout>
 
 
