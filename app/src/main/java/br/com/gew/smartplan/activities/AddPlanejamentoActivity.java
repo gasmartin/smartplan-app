@@ -106,7 +106,8 @@ public class AddPlanejamentoActivity extends AppCompatActivity {
     {
         boolean resultado = false;
         try {
-            resultado = new AddPlanejamentoTask().execute("0", txtNome.getText().toString(), txtDescricao.getText().toString(), Long.toString(id)).get();
+            resultado = new AddPlanejamentoTask().execute("0", txtNome.getText().toString(), txtDescricao.getText().toString(),
+                    dataInicio.getText().toString(), dataFinal.getText().toString(), Long.toString(id)).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

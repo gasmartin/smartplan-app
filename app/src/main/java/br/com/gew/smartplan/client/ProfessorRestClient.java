@@ -18,7 +18,7 @@ import br.com.gew.smartplan.activities.MainActivity;
 import br.com.gew.smartplan.model.Professor;
 
 public class ProfessorRestClient {
-    private final String BASE_URL = "http://192.168.0.20:3000/api/professor/";
+    private final String BASE_URL = "http://192.168.56.1:3000/api/professor/";
     private RestTemplate restTemplate = new RestTemplate();
     private Professor professor;
 

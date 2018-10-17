@@ -15,7 +15,7 @@ import br.com.gew.smartplan.model.Turma;
 
 public class TurmaRestClient {
 
-    private final String BASE_URL = "http://192.168.0.20:3000/api";
+    private final String BASE_URL = "http://192.168.56.1:3000/api";
     private RestTemplate restTemplate = new RestTemplate();
     private Turma turma;
 

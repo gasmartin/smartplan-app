@@ -13,11 +13,12 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
+import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Planejamento;
 
 public class PlanejamentoRestClient {
 
-    private final String BASE_URL = "http://192.168.0.20:3000/api";
+    private final String BASE_URL = "http://192.168.56.1:3000/api";
     private RestTemplate restTemplate = new RestTemplate();
 
     private Planejamento planejamento;
@@ -35,8 +36,7 @@ public class PlanejamentoRestClient {
         return planejamentoList;
     }
 
-    //IMPLEMENTAR DATAS
-    public Boolean insertPlanejamento(Integer cor, String nome, String descricao, Long professorId){
+    public Boolean insertPlanejamento(String cor, String nome, String descricao, String dataInicio, String dataFinal, Long professorId){
         String url = BASE_URL + "/planejamento/insert/" + professorId;
         try{
 
@@ -47,8 +47,8 @@ public class PlanejamentoRestClient {
             jsonObject.put("cor", cor);
             jsonObject.put("nome", nome);
             jsonObject.put("descricao", descricao);
-            jsonObject.put("dataInicio", null);
-            jsonObject.put("dataFinal", null);
+            jsonObject.put("dataInicio", dataInicio);
+            jsonObject.put("dataFinal", dataFinal);
 
             HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
 

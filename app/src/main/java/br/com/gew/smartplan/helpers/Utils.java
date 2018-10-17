@@ -9,11 +9,35 @@ import java.util.Date;
 
 public class Utils {
 
+    public enum Cores{
+        AZUl(0), VERDE(1), VERMELHO(2);
+
+        public int value;
+
+        Cores(int i) {
+            this.value = i;
+        }
+    }
+
+    //Avisos na tela
     public static void showMessage(Context context, String message,  int duration){
         Toast.makeText(context, message, duration).show();
     }
 
+    //Converte uma objeto java.util.Date para java.lang.String
     public static String dateToString(Date date){
         return new SimpleDateFormat("dd/MM/yyyy").format(date);
+    }
+
+    //Converte uma objeto java.lang.String para java.util.Date
+    public static Date stringToDate(String s){
+        try{
+            return new SimpleDateFormat("dd/MM/yyyy").parse(s);
+        }
+        catch (ParseException ex){
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 }
