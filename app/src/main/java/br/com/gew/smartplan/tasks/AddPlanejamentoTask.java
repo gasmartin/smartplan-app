@@ -9,7 +9,7 @@ public class AddPlanejamentoTask extends AsyncTask<String, Void, Boolean> {
     private PlanejamentoRestClient planejamentoRestClient;
 
     @Override
-    protected Boolean doInBackground(String...strings) {
+    protected Boolean doInBackground(String... strings) {
         planejamentoRestClient = new PlanejamentoRestClient();
         return planejamentoRestClient.insertPlanejamento(strings[0], strings[1], strings[2], strings[3], strings[4], Long.parseLong(strings[5]));
     }

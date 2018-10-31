@@ -18,11 +18,15 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.txtUser) EditText txtUser;
-    @BindView(R.id.txtSenha) EditText txtSenha;
+    @BindView(R.id.txtUser)
+    EditText txtUser;
+    @BindView(R.id.txtSenha)
+    EditText txtSenha;
 
-    @BindView(R.id.btnEntrar) Button btnEntrar;
-    @BindView(R.id.btnCadastrar) Button btnCadastrar;
+    @BindView(R.id.btnEntrar)
+    Button btnEntrar;
+    @BindView(R.id.btnCadastrar)
+    Button btnCadastrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,31 +38,29 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         Long verify = preferences.getLong("professor_id", 0);
 
-        if(verify != 0){
+        if (verify != 0) {
             Intent homeActivity = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(homeActivity);
         }
     }
 
     @OnClick(R.id.btnEntrar)
-    public void fazerLogin(View view){
+    public void fazerLogin(View view) {
         String username, senha;
         username = txtUser.getText().toString();
         senha = txtSenha.getText().toString();
 
-        if("".equals(username) || "".equals(senha)){
+        if ("".equals(username) || "".equals(senha)) {
             showMessage("Todos os campos devem ser preenchidos.");
-        }
-        else{
+        } else {
             Professor professor = Professor.getInstance();
-            try{
+            try {
                 professor = new LoginTask().execute(username, senha).get();
-            }
-            catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            if(professor != null){
+            if (professor != null) {
 
                 SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
@@ -73,20 +75,19 @@ public class MainActivity extends AppCompatActivity {
                 Intent tabbedScreen = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(tabbedScreen);
                 finish();
-            }
-            else{
+            } else {
                 showMessage("E-mail ou senha incorretos.");
             }
         }
     }
 
     @OnClick(R.id.btnCadastrar)
-    public void cadastrarUsuario(View view){
+    public void cadastrarUsuario(View view) {
         Intent telaCadastrar = new Intent(MainActivity.this, CadastroActivity.class);
         startActivity(telaCadastrar);
     }
 
-    private void showMessage(String message){
+    private void showMessage(String message) {
         Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
         toast.show();
     }
