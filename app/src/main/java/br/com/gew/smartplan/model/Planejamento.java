@@ -9,8 +9,8 @@ public class Planejamento implements Serializable {
     private Integer cor;
     private String nome;
     private String descricao;
-    private Date dataInicio;
-    private Date dataFinal;
+    private String dataInicio;
+    private String dataFinal;
 
     private static Planejamento instance;
 
@@ -53,19 +53,19 @@ public class Planejamento implements Serializable {
         this.descricao = descricao;
     }
 
-    public Date getDataInicio() {
+    public String getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(String dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public Date getDataFinal() {
+    public String getDataFinal() {
         return dataFinal;
     }
 
-    public void setDataFinal(Date dataFinal) {
+    public void setDataFinal(String dataFinal) {
         this.dataFinal = dataFinal;
     }
 }

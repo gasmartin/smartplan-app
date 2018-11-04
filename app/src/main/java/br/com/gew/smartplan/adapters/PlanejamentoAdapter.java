@@ -13,25 +13,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.gew.smartplan.R;
+import br.com.gew.smartplan.helpers.Utils;
+import br.com.gew.smartplan.model.Planejamento;
 
 public class PlanejamentoAdapter extends RecyclerView.Adapter<PlanejamentoAdapter.ViewHolder>{
 
     private static final String TAG = "PlanejamentoAdapter";
 
     public Context context;
-    public ArrayList<String> nomes;
+    public List<Planejamento> planejamentos;
 
-    public PlanejamentoAdapter(Context context, ArrayList<String> nomes) {
+    public PlanejamentoAdapter(Context context, List<Planejamento> planejamentos) {
         this.context = context;
-        this.nomes = nomes;
+        this.planejamentos = planejamentos;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.planejamento_itemlist, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.planejamento_itemlist, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -40,31 +43,38 @@ public class PlanejamentoAdapter extends RecyclerView.Adapter<PlanejamentoAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
 
-        holder.nomePlanejamento.setText(nomes.get(position));
+        Planejamento p = planejamentos.get(position);
+
+        holder.nomePlanejamento.setText(p.getNome());
+        String aux = "";
+        aux += p.getDataInicio().toString() + " até " + p.getDataFinal().toString();
+        holder.periodoPlanejamento.setText(aux);
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on: " + nomes.get(position));
-                Toast.makeText(context, nomes.get(position), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onClick: clicked on: " + planejamentos.get(position));
+                Utils.showMessage(context, planejamentos.get(position).getNome(), Toast.LENGTH_SHORT);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return nomes.size();
+        return planejamentos.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private RelativeLayout parentLayout;
         private TextView nomePlanejamento;
+        private TextView periodoPlanejamento;
 
         public ViewHolder(View itemView) {
             super(itemView);
             parentLayout = itemView.findViewById(R.id.parent_layout_plan);
             nomePlanejamento = itemView.findViewById(R.id.planejamento_nome);
+            periodoPlanejamento = itemView.findViewById(R.id.planejamento_periodo);
         }
     }
 }

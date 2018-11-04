@@ -32,7 +32,7 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.ViewHolder>{
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.turma_itemlist, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.turma_itemlist, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }

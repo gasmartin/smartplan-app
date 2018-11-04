@@ -33,8 +33,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class PlanejamentoFragment extends Fragment {
 
     private static final String TAG = "PlanejamentoFragment";
-
-    private ArrayList<String> nomes = new ArrayList<>();
+    private List<Planejamento> planejamentos = new ArrayList<>();
 
     RecyclerView recyclerView;
 
@@ -58,27 +57,23 @@ public class PlanejamentoFragment extends Fragment {
         SharedPreferences preferences = getContext().getSharedPreferences("UserPreferences", MODE_PRIVATE);
         Long id = preferences.getLong("professor_id", 0);
 
-        List<Planejamento> planejamentoList = null;
+        List<Planejamento> planejamentoList = new ArrayList<>();
 
         try {
-            planejamentoList = new PlanejamentoListTask().execute(id).get();
+            planejamentos = new PlanejamentoListTask().execute(id).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
-        if(planejamentoList != null){
-            for (Planejamento planejamento : planejamentoList){
-                nomes.add(planejamento.getNome());
-            }
+        if(planejamentos != null){
+            PlanejamentoAdapter adapter = new PlanejamentoAdapter(getContext(), planejamentos);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         }
         else{
             Toast.makeText(getContext(), "Tá vazio, jão", Toast.LENGTH_SHORT).show();
         }
-
-        PlanejamentoAdapter adapter = new PlanejamentoAdapter(getContext(), nomes);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }

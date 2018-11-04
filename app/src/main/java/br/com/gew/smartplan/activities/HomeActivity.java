@@ -1,5 +1,6 @@
 package br.com.gew.smartplan.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -105,12 +107,27 @@ public class HomeActivity extends AppCompatActivity {
         // Take appropriate action for each action item click
         switch (item.getItemId()) {
             case R.id.action_logout:
-                SharedPreferences.Editor prefsEditor = getSharedPreferences("UserPreferences", MODE_PRIVATE).edit();
-                prefsEditor.clear();
-                prefsEditor.commit();
-                Intent mainActivity = new Intent(HomeActivity.this, MainActivity.class);
-                startActivity(mainActivity);
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Deseja realmente sair?").setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences.Editor prefsEditor = getSharedPreferences("UserPreferences", MODE_PRIVATE).edit();
+                        prefsEditor.clear();
+                        prefsEditor.commit();
+                        Intent mainActivity = new Intent(HomeActivity.this, MainActivity.class);
+                        startActivity(mainActivity);
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.nao, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        
+                    }
+                });
+
+                builder.show();
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

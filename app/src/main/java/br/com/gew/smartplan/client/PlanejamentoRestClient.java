@@ -18,7 +18,7 @@ import br.com.gew.smartplan.model.Planejamento;
 
 public class PlanejamentoRestClient {
 
-    private final String BASE_URL = "http://192.168.56.1:3000/api";
+    private final String BASE_URL = "http://192.168.0.20:3000/api";
     private RestTemplate restTemplate = new RestTemplate();
 
     private Planejamento planejamento;
@@ -39,7 +39,6 @@ public class PlanejamentoRestClient {
     public Boolean insertPlanejamento(String cor, String nome, String descricao, String dataInicio, String dataFinal, Long professorId){
         String url = BASE_URL + "/planejamento/insert/" + professorId;
         try{
-
             JSONObject jsonObject = new JSONObject();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

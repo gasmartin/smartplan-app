@@ -114,10 +114,9 @@ public class AddPlanejamentoActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         if(!resultado) Utils.showMessage(getBaseContext(), "Alguma coisa de errado deu", 0);
-    }
-
-    @OnClick({R.id.data_inicio, R.id.data_final})
-    public void pickDate(final EditText txt){
-
+        else{
+            Utils.showMessage(getBaseContext(), "Beleza!", 0);
+            finish();
+        }
     }
 }
