@@ -1,6 +1,8 @@
 package br.com.gew.smartplan.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.gew.smartplan.R;
+import br.com.gew.smartplan.activities.HomeActivity;
+import br.com.gew.smartplan.activities.PlanejamentoActivity;
 import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Planejamento;
 
@@ -54,7 +58,11 @@ public class PlanejamentoAdapter extends RecyclerView.Adapter<PlanejamentoAdapte
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked on: " + planejamentos.get(position));
-                Utils.showMessage(context, planejamentos.get(position).getNome(), Toast.LENGTH_SHORT);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("planejamento", planejamentos.get(position));
+                Intent planejamentoActivity = new Intent(context, PlanejamentoActivity.class);
+                planejamentoActivity.putExtras(bundle);
+                context.startActivity(planejamentoActivity);
             }
         });
     }
