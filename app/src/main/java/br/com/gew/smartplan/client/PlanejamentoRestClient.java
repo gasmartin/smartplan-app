@@ -9,11 +9,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 
-import br.com.gew.smartplan.helpers.Utils;
+import br.com.gew.smartplan.model.Evento;
 import br.com.gew.smartplan.model.Planejamento;
 
 public class PlanejamentoRestClient {
@@ -59,5 +57,18 @@ public class PlanejamentoRestClient {
             ex.printStackTrace();
             return false;
         }
+    }
+
+    public List<Evento> getEventosByPlanejamentoId(Long planejamentoId) {
+        String url = BASE_URL + "/planejamento/" + planejamentoId + "/eventos";
+        List<Evento> eventos = null;
+        try{
+            eventos = restTemplate.exchange(url, HttpMethod.GET, null,
+                    new ParameterizedTypeReference<List<Evento>>(){}).getBody();
+        }
+        catch (RestClientException ex) {
+            ex.printStackTrace();
+        }
+        return eventos;
     }
 }
