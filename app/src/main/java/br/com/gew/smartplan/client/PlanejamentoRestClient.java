@@ -16,7 +16,7 @@ import br.com.gew.smartplan.model.Planejamento;
 
 public class PlanejamentoRestClient {
 
-    private final String BASE_URL = "http://192.168.0.20:3000/api";
+    private final String BASE_URL = "http://192.168.56.1:3000/api";
     private RestTemplate restTemplate = new RestTemplate();
 
     private Planejamento planejamento;

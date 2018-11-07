@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 
 import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.adapters.PlanejamentoAdapter;
+import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Planejamento;
 import br.com.gew.smartplan.tasks.PlanejamentoListTask;
 import butterknife.BindView;
@@ -37,6 +39,8 @@ public class PlanejamentoFragment extends Fragment {
 
     RecyclerView recyclerView;
 
+    Button botaoTeste;
+
     public PlanejamentoFragment() {
     }
 
@@ -45,7 +49,7 @@ public class PlanejamentoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_planejamento, container, false);
+        return inflater.inflate(R.layout.vp_planejamento, container, false);
     }
 
     @Override
@@ -53,6 +57,13 @@ public class PlanejamentoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = getView().findViewById(R.id.rv_planejamentos);
+        botaoTeste = getView().findViewById(R.id.botaoTeste);
+        botaoTeste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.showMessage(getContext(), "Foi!", 2);
+            }
+        });
 
         SharedPreferences preferences = getContext().getSharedPreferences("UserPreferences", MODE_PRIVATE);
         Long id = preferences.getLong("professor_id", 0);

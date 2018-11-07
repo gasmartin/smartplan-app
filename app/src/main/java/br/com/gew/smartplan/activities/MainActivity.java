@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         Long verify = preferences.getLong("professor_id", 0);
 
         if (verify != 0) {
-            Intent homeActivity = new Intent(MainActivity.this, HomeActivity.class);
+            Intent homeActivity = new Intent(MainActivity.this, NavigationActivity.class);
             startActivity(homeActivity);
         }
     }
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
                 editor.commit();
 
-                Intent tabbedScreen = new Intent(MainActivity.this, HomeActivity.class);
+                Intent tabbedScreen = new Intent(MainActivity.this, NavigationActivity.class);
                 startActivity(tabbedScreen);
                 finish();
             } else {
