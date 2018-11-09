@@ -1,7 +1,9 @@
 package br.com.gew.smartplan.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,22 +15,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.annimon.stream.function.Consumer;
+
 import java.util.ArrayList;
 
 import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.fragments.PlanejamentoFragment;
 import br.com.gew.smartplan.fragments.TurmaFragment;
+import br.com.gew.smartplan.helpers.Utils;
 import devlight.io.library.ntb.NavigationTabBar;
 
 public class NavigationActivity extends AppCompatActivity {
 
     private ViewPager view;
     private NavigationTabBar ntb;
+    private FloatingActionButton btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
+
+        btn = findViewById(R.id.add_button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addPlanejamento = new Intent(NavigationActivity.this, AddPlanejamentoActivity.class);
+                startActivity(addPlanejamento);
+            }
+        });
 
         view = findViewById(R.id.vp_horizontal_ntb);
         view.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
@@ -60,7 +75,24 @@ public class NavigationActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(final int position) {
-                ntb.getModels().get(position).hideBadge();
+                if(position == 0){
+                    btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent addPlanejamento = new Intent(NavigationActivity.this, AddPlanejamentoActivity.class);
+                            startActivity(addPlanejamento);
+                        }
+                    });
+                }
+                else if(position == 1){
+                    btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent addTurma = new Intent(NavigationActivity.this, AddTurmaActivity.class);
+                            startActivity(addTurma);
+                        }
+                    });
+                }
             }
 
             @Override

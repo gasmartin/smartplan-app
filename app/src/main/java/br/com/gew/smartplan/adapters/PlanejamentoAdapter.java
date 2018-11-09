@@ -4,12 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,10 +55,17 @@ public class PlanejamentoAdapter extends RecyclerView.Adapter<PlanejamentoAdapte
 
         holder.nomePlanejamento.setText(p.getNome());
         String aux = "";
-        aux += p.getDataInicio().toString() + " até " + p.getDataFinal().toString();
-        holder.periodoPlanejamento.setText(aux);
+        aux += p.getDataInicio().toString() + " . " + p.getDataFinal().toString();
+        //holder.periodoPlanejamento.setText(aux);
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        holder.planDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked on: " + planejamentos.get(position));
@@ -63,6 +74,22 @@ public class PlanejamentoAdapter extends RecyclerView.Adapter<PlanejamentoAdapte
                 Intent planejamentoActivity = new Intent(context, PlanejamentoActivity.class);
                 planejamentoActivity.putExtras(bundle);
                 context.startActivity(planejamentoActivity);
+            }
+        });
+
+
+
+        holder.planUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.showMessage(context, "Update", 0);
+            }
+        });
+
+        holder.planDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.showMessage(context, "Delete", 0);
             }
         });
     }
@@ -74,15 +101,21 @@ public class PlanejamentoAdapter extends RecyclerView.Adapter<PlanejamentoAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private RelativeLayout parentLayout;
+        private CardView parentLayout;
         private TextView nomePlanejamento;
-        private TextView periodoPlanejamento;
+        private ImageView planDetails;
+        private ImageView planUpdate;
+        private ImageView planDelete;
+        //private TextView periodoPlanejamento;
 
         public ViewHolder(View itemView) {
             super(itemView);
             parentLayout = itemView.findViewById(R.id.parent_layout_plan);
             nomePlanejamento = itemView.findViewById(R.id.planejamento_nome);
-            periodoPlanejamento = itemView.findViewById(R.id.planejamento_periodo);
+            planDetails = itemView.findViewById(R.id.plan_details);
+            planUpdate = itemView.findViewById(R.id.plan_update);
+            planDelete = itemView.findViewById(R.id.plan_delete);
+            //periodoPlanejamento = itemView.findViewById(R.id.planejamento_periodo);
         }
     }
 }

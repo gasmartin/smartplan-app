@@ -39,8 +39,6 @@ public class PlanejamentoFragment extends Fragment {
 
     RecyclerView recyclerView;
 
-    Button botaoTeste;
-
     public PlanejamentoFragment() {
     }
 
@@ -57,13 +55,6 @@ public class PlanejamentoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = getView().findViewById(R.id.rv_planejamentos);
-        botaoTeste = getView().findViewById(R.id.botaoTeste);
-        botaoTeste.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.showMessage(getContext(), "Foi!", 2);
-            }
-        });
 
         SharedPreferences preferences = getContext().getSharedPreferences("UserPreferences", MODE_PRIVATE);
         Long id = preferences.getLong("professor_id", 0);
