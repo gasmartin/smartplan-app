@@ -56,6 +56,19 @@
             android:layout_height="18dp" />
 
         <TextView
+            android:id="@+id/textView16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="E-mail" />
+
+        <EditText
+            android:id="@+id/txtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -96,11 +109,6 @@
             android:layout_width="match_parent"
             android:layout_height="10dp" />
 
-        <Button
-            android:id="@+id/btnCancelar"
-            android:layout_width="match_parent"
-            android:layout_height="61dp"
-            android:text="Cancelar" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

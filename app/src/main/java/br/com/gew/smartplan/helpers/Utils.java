@@ -1,11 +1,9 @@
 package br.com.gew.smartplan.helpers;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DrawableUtils;
 import android.widget.Toast;
 
 import com.applandeo.materialcalendarview.CalendarUtils;

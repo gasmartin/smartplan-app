@@ -18,14 +18,11 @@ import android.view.View;
 import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.fragments.PlanejamentoFragment;
 import br.com.gew.smartplan.fragments.TurmaFragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity {
 
     private Fragment selectedFragment = null;
 
-    @BindView(R.id.add_button)
     FloatingActionButton btn;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -72,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        ButterKnife.bind(this);
+        btn = findViewById(R.id.add_button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

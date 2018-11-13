@@ -2,7 +2,6 @@ package br.com.gew.smartplan.fragments;
 
 
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -21,11 +19,7 @@ import java.util.concurrent.ExecutionException;
 
 import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.adapters.PlanejamentoAdapter;
-import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Planejamento;
-import br.com.gew.smartplan.tasks.PlanejamentoListTask;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -47,7 +41,7 @@ public class PlanejamentoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.vp_planejamento, container, false);
+        return inflater.inflate(R.layout.fragment_planejamento, container, false);
     }
 
     @Override
@@ -61,13 +55,7 @@ public class PlanejamentoFragment extends Fragment {
 
         List<Planejamento> planejamentoList = new ArrayList<>();
 
-        try {
-            planejamentos = new PlanejamentoListTask().execute(id).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        //Retornar lista
 
         if(planejamentos != null){
             PlanejamentoAdapter adapter = new PlanejamentoAdapter(getContext(), planejamentos);

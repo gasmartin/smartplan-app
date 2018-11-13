@@ -1,47 +1,46 @@
 package br.com.gew.smartplan.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
-import java.util.List;
 
 public class Professor implements Serializable {
 
-    private Long id;
+    @SerializedName("id") private Long id;
+    @SerializedName("nome") private String nome;
+    @SerializedName("email") private String email;
+    @SerializedName("username") private String username;
+    @SerializedName("senha") private String senha;
 
-    private String nome;
-
-    private String username;
-
-    private String senha;
-
-    private static Professor instance;
-
-    public static Professor getInstance() {
-        if (instance == null) {
-            instance = new Professor();
-        }
-        return instance;
+    public Professor(String nome, String email, String username, String senha) {
+        this.nome = nome;
+        this.email = email;
+        this.username = username;
+        this.senha = senha;
     }
 
     public Long getId() {
         return this.id;
     }
 
-    public void setId() {
-        this.id = id;
-    }
-
     public String getNome() {
         return this.nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
         return this.username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -49,7 +48,6 @@ public class Professor implements Serializable {
     public String getSenha() {
         return this.senha;
     }
-
     public void setSenha(String senha) {
         this.senha = senha;
     }

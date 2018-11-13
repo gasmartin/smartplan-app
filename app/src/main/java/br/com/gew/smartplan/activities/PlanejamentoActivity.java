@@ -13,16 +13,12 @@ import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Evento;
 import br.com.gew.smartplan.model.Planejamento;
-import br.com.gew.smartplan.tasks.EventoListTask;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class PlanejamentoActivity extends AppCompatActivity {
 
     private Planejamento planejamento;
     private List<Evento> eventos;
 
-    @BindView(R.id.calendar)
     public com.applandeo.materialcalendarview.CalendarView calendarView;
 
     private Long id;
@@ -32,16 +28,16 @@ public class PlanejamentoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planejamento);
 
+        calendarView = findViewById(R.id.calendar);
+
         SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         id = preferences.getLong("professor_id", 0);
 
         planejamento = (Planejamento) getIntent().getExtras().getSerializable("planejamento");
-        ButterKnife.bind(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(planejamento.getNome());
 
-        eventos = retornarLista();
         if(eventos != null) Log.d("Testando:", "Não tá vazio");
 
         Calendar min = Calendar.getInstance();
@@ -65,18 +61,5 @@ public class PlanejamentoActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    public List<Evento> retornarLista(){
-        List<Evento> aux = null;
-        try{
-            aux = new EventoListTask().execute(id).get();
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        return aux;
     }
 }

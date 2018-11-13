@@ -26,7 +26,6 @@
         <activity android:name=".activities.AddTurmaActivity" />
         <activity android:name=".activities.AddPlanejamentoActivity" />
         <activity android:name=".activities.PlanejamentoActivity" />
-        <activity android:name=".activities.NavigationActivity"></activity>
     </application>
 
 </manifest>

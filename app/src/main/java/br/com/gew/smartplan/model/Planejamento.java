@@ -1,7 +1,6 @@
 package br.com.gew.smartplan.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Planejamento implements Serializable {
 
