@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.client.ProfessorClient;
+import br.com.gew.smartplan.client.RetrofitClient;
 import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Professor;
 import retrofit2.Call;
@@ -43,9 +44,7 @@ public class CadastroActivity extends AppCompatActivity {
 
         btnCadastrar = findViewById(R.id.btnCadastrar);
         btnCadastrar.setOnClickListener(v -> {
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(ProfessorClient.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create()).build();
-            ProfessorClient pc = retrofit.create(ProfessorClient.class);
+            ProfessorClient pc = RetrofitClient.getRetrofit().create(ProfessorClient.class);
             Professor professor = new Professor(txtNome.getText().toString(), txtEmail.getText().toString(),
                     txtUser.getText().toString(), txtSenha.getText().toString());
             Call c = pc.cadastrar(professor);

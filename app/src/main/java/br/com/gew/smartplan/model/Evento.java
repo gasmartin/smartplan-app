@@ -1,22 +1,22 @@
 package br.com.gew.smartplan.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Evento implements Serializable {
 
-    private Long id;
-    private String nome;
-    private String descricao;
-    private Character tipo;
-    private String dataEvento;
+    @SerializedName("id") private Long id;
+    @SerializedName("nome") private String nome;
+    @SerializedName("descricao") private String descricao;
+    @SerializedName("tipo") private Character tipo;
+    @SerializedName("dataEvento") private String dataEvento;
 
-    private static Evento instance;
-
-    public static Evento getInstance() {
-        if (instance == null) {
-            instance = new Evento();
-        }
-        return instance;
+    public Evento(String nome, String descricao, Character tipo, String dataEvento) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.tipo = tipo;
+        this.dataEvento = dataEvento;
     }
 
     public Long getId() {

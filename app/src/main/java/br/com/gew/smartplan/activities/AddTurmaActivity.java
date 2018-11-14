@@ -3,16 +3,20 @@ package br.com.gew.smartplan.activities;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
-
-import java.util.concurrent.ExecutionException;
 
 import br.com.gew.smartplan.R;
+import br.com.gew.smartplan.client.RetrofitClient;
+import br.com.gew.smartplan.client.TurmaClient;
+import br.com.gew.smartplan.helpers.Utils;
+import br.com.gew.smartplan.model.Turma;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class AddTurmaActivity extends AppCompatActivity {
@@ -35,6 +39,9 @@ public class AddTurmaActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Adicionar Turma");
 
+        SharedPreferences sf = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        id = sf.getLong("professor_id", 0);
+
         SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         this.id = preferences.getLong("professor_id", 0);
 
@@ -46,7 +53,21 @@ public class AddTurmaActivity extends AppCompatActivity {
 
         insert = findViewById(R.id.insert_turma);
         insert.setOnClickListener(v -> {
+            TurmaClient tc = RetrofitClient.getRetrofit().create(TurmaClient.class);
+            Turma t = new Turma(1, Integer.parseInt(turmaSala.getText().toString()), turmaNome.getText().toString(), turmaDescricao.getText().toString());
+            Call c = tc.insertTurma(id, t);
+            c.enqueue(new Callback() {
+                @Override
+                public void onResponse(Call call, Response response) {
+                    finish();
+                }
 
+                @Override
+                public void onFailure(Call call, Throwable t) {
+                    Utils.showMessage(getApplicationContext(), "Não deu certo!", 0);
+                    Log.d("AddTurmaActivity: ", t.getMessage());
+                }
+            });
         });
     }
 

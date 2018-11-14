@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.client.ProfessorClient;
+import br.com.gew.smartplan.client.RetrofitClient;
 import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Professor;
 import retrofit2.Call;
@@ -42,9 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnEntrar = findViewById(R.id.btnEntrar);
         btnEntrar.setOnClickListener(v -> {
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(ProfessorClient.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create()).build();
-            ProfessorClient pc = retrofit.create(ProfessorClient.class);
+            ProfessorClient pc = RetrofitClient.getRetrofit().create(ProfessorClient.class);
             Call c = pc.executarLogin(txtUser.getText().toString(), txtSenha.getText().toString());
             c.enqueue(new Callback() {
                 @Override
@@ -54,11 +53,12 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
 
-                    editor.putLong("id", p.getId());
+                    editor.putLong("professor_id", p.getId());
                     editor.commit();
 
                     Intent homeActivity = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(homeActivity);
+                    finish();
                 }
 
                 @Override

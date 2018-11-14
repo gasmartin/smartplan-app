@@ -1,23 +1,24 @@
 package br.com.gew.smartplan.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Planejamento implements Serializable {
 
-    private Long id;
-    private Integer cor;
-    private String nome;
-    private String descricao;
-    private String dataInicio;
-    private String dataFinal;
+    @SerializedName("id") private Long id;
+    @SerializedName("cor") private Integer cor;
+    @SerializedName("nome") private String nome;
+    @SerializedName("descricao") private String descricao;
+    @SerializedName("dataInicio") private String dataInicio;
+    @SerializedName("dataFinal") private String dataFinal;
 
-    private static Planejamento instance;
-
-    public static Planejamento getInstance() {
-        if (instance == null) {
-            instance = new Planejamento();
-        }
-        return instance;
+    public Planejamento(Integer cor, String nome, String descricao, String dataInicio, String dataFinal) {
+        this.cor = cor;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.dataInicio = dataInicio;
+        this.dataFinal = dataFinal;
     }
 
     public Long getId() {

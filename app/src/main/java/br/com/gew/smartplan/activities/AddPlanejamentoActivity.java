@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +15,13 @@ import android.widget.Spinner;
 import java.util.Calendar;
 
 import br.com.gew.smartplan.R;
+import br.com.gew.smartplan.client.PlanejamentoClient;
+import br.com.gew.smartplan.client.RetrofitClient;
 import br.com.gew.smartplan.helpers.Utils;
+import br.com.gew.smartplan.model.Planejamento;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class AddPlanejamentoActivity extends AppCompatActivity {
@@ -27,7 +34,7 @@ public class AddPlanejamentoActivity extends AppCompatActivity {
     private EditText dataInicio;
     private EditText dataFinal;
 
-    Long id;
+    private Long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,49 +44,61 @@ public class AddPlanejamentoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Adicionar Planejamento");
 
+        SharedPreferences sp = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        id = sp.getLong("professor_id", 0);
+
         txtNome = findViewById(R.id.txt_nome_planejamento);
         txtDescricao = findViewById(R.id.txt_descricao_planejamento);
         spinner = findViewById(R.id.spinner_cores);
 
         insert = findViewById(R.id.insert_planejamento);
         insert.setOnClickListener(v -> {
-            //Inserir o planejamento
+            PlanejamentoClient pc = RetrofitClient.getRetrofit().create(PlanejamentoClient.class);
+            Planejamento p = new Planejamento(1, txtNome.getText().toString(), txtDescricao.getText().toString(),
+                    dataInicio.getText().toString(), dataFinal.getText().toString());
+            Call c = pc.insertPlanejamento(id, p);
+            c.enqueue(new Callback() {
+                @Override
+                public void onResponse(Call call, Response response) {
+                    finish();
+                }
+
+                @Override
+                public void onFailure(Call call, Throwable t) {
+                    Utils.showMessage(getApplicationContext(), "Deu errado, mano", 0);
+                    Log.d("AddPlanejamentoActivity", t.getMessage());
+                }
+            });
         });
 
         SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         this.id = preferences.getLong("professor_id", 0);
 
         dataInicio = findViewById(R.id.data_inicio);
-        dataInicio.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    final Calendar c = Calendar.getInstance();
-                    new DatePickerDialog(AddPlanejamentoActivity.this, new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            c.set(year, month, dayOfMonth);
-                            dataInicio.setText(Utils.dateToString(c.getTime()));
-                        }
-                    }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
-                }
+        dataInicio.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus){
+                final Calendar c = Calendar.getInstance();
+                new DatePickerDialog(AddPlanejamentoActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        c.set(year, month, dayOfMonth);
+                        dataInicio.setText(Utils.dateToString(c.getTime()));
+                    }
+                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
         dataFinal = findViewById(R.id.data_final);
-        dataFinal.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    final Calendar c = Calendar.getInstance();
-                    new DatePickerDialog(AddPlanejamentoActivity.this, new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            c.set(year, month, dayOfMonth);
-                            dataFinal.setText(Utils.dateToString(c.getTime()));
-                        }
-                    }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
-                }
+        dataFinal.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus){
+                final Calendar c = Calendar.getInstance();
+                new DatePickerDialog(AddPlanejamentoActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        c.set(year, month, dayOfMonth);
+                        dataFinal.setText(Utils.dateToString(c.getTime()));
+                    }
+                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
     }
