@@ -2,13 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/navigation_planejamentos"
+        android:icon="@drawable/ic_planejamento"
+        android:title="@string/title_planejamento" />
+
+    <item
         android:id="@+id/navigation_turmas"
-        android:icon="@drawable/ic_action_name"
+        android:icon="@drawable/ic_turma"
         android:title="@string/title_turma" />
 
     <item
-        android:id="@+id/navigation_planejamentos"
-        android:icon="@drawable/planejamento"
-        android:title="@string/title_planejamento" />
+        android:id="@+id/navigation_perfil"
+        android:icon="@drawable/ic_perfil"
+        android:title="@string/title_perfil" />
 
 </menu>

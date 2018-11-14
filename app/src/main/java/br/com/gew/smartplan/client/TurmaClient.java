@@ -16,6 +16,9 @@ public interface TurmaClient {
     @GET("professor/{id}/turmas")
     Call<List<Turma>> returnListByProfessorId(@Path("id") Long id);
 
+    @GET("turma/{id]")
+    Call<Turma> findByProfessorId(@Path("id") Long id);
+
     @POST("turma/insert/{id}")
     Call<Turma> insertTurma(@Path("id") Long professor_id, @Body Turma planejamento);
 

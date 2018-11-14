@@ -48,17 +48,23 @@ public class MainActivity extends AppCompatActivity {
             c.enqueue(new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) {
-                    Professor p = (Professor) response.body();
+                    if(response.body() != null){
 
-                    SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
+                        Professor p = (Professor) response.body();
 
-                    editor.putLong("professor_id", p.getId());
-                    editor.commit();
+                        SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
 
-                    Intent homeActivity = new Intent(MainActivity.this, HomeActivity.class);
-                    startActivity(homeActivity);
-                    finish();
+                        editor.putLong("professor_id", p.getId());
+                        editor.commit();
+
+                        Intent homeActivity = new Intent(MainActivity.this, HomeActivity.class);
+                        startActivity(homeActivity);
+                        finish();
+                    }
+                    else{
+                        Utils.showMessage(getApplicationContext(), "Não encontrado", 0);
+                    }
                 }
 
                 @Override

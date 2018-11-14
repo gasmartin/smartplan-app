@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import br.com.gew.smartplan.R;
+import br.com.gew.smartplan.fragments.PerfilFragment;
 import br.com.gew.smartplan.fragments.PlanejamentoFragment;
 import br.com.gew.smartplan.fragments.TurmaFragment;
 
@@ -33,23 +34,20 @@ public class HomeActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_turmas:
                     selectedFragment = new TurmaFragment();
-                    btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent addTurma = new Intent(HomeActivity.this, AddTurmaActivity.class);
-                            startActivity(addTurma);
-                        }
-                    });
+                    /*btn.setOnClickListener(v -> {
+                        Intent addTurma = new Intent(HomeActivity.this, AddTurmaActivity.class);
+                        startActivity(addTurma);
+                    });*/
                     break;
                 case R.id.navigation_planejamentos:
                     selectedFragment = new PlanejamentoFragment();
-                    btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent addPlanejamento = new Intent(HomeActivity.this, AddPlanejamentoActivity.class);
-                            startActivity(addPlanejamento);
-                        }
-                    });
+                    /*btn.setOnClickListener(v -> {
+                        Intent addPlanejamento = new Intent(HomeActivity.this, AddPlanejamentoActivity.class);
+                        startActivity(addPlanejamento);
+                    });*/
+                    break;
+                case R.id.navigation_perfil:
+                    selectedFragment = new PerfilFragment();
                     break;
             }
 
@@ -69,14 +67,14 @@ public class HomeActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        btn = findViewById(R.id.add_button);
-        btn.setOnClickListener(new View.OnClickListener() {
+        //btn = findViewById(R.id.add_button);
+        /*btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent addTurma = new Intent(HomeActivity.this, AddTurmaActivity.class);
                 startActivity(addTurma);
             }
-        });
+        });*/
     }
 
     @Override

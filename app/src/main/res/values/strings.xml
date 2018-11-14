@@ -3,6 +3,7 @@
     <string name="title_activity_tabbed">TabbedActivity</string>
     <string name="title_turma">Turmas</string>
     <string name="title_planejamento">Planejamentos</string>
+    <string name="title_perfil">Perfil</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="logout">Sair</string>
 
