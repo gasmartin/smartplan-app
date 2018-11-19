@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -43,48 +44,9 @@ public class PlanejamentoAdapter extends RecyclerView.Adapter<PlanejamentoAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
-
         Planejamento p = planejamentos.get(position);
 
-        holder.nomePlanejamento.setText(p.getNome());
-        String aux = "";
-        aux += p.getDataInicio().toString() + " . " + p.getDataFinal().toString();
-        //holder.periodoPlanejamento.setText(aux);
-
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        holder.planDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on: " + planejamentos.get(position));
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("planejamento", planejamentos.get(position));
-                Intent planejamentoActivity = new Intent(context, PlanejamentoActivity.class);
-                planejamentoActivity.putExtras(bundle);
-                context.startActivity(planejamentoActivity);
-            }
-        });
-
-
-
-        holder.planUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.showMessage(context, "Update", 0);
-            }
-        });
-
-        holder.planDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.showMessage(context, "Delete", 0);
-            }
-        });
+        holder.nome.setText(p.getNome());
     }
 
     @Override
@@ -94,19 +56,15 @@ public class PlanejamentoAdapter extends RecyclerView.Adapter<PlanejamentoAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private CardView parentLayout;
-        private TextView nomePlanejamento;
-        private ImageView planDetails;
-        private ImageView planUpdate;
-        private ImageView planDelete;
+        private CardView cardView;
+        private ConstraintLayout constraintLayout;
+        private TextView nome;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            parentLayout = itemView.findViewById(R.id.parent_layout_plan);
-            nomePlanejamento = itemView.findViewById(R.id.planejamento_nome);
-            planDetails = itemView.findViewById(R.id.plan_details);
-            planUpdate = itemView.findViewById(R.id.plan_update);
-            planDelete = itemView.findViewById(R.id.plan_delete);
+            cardView = itemView.findViewById(R.id.plan_card);
+            constraintLayout = itemView.findViewById(R.id.plan_layout);
+            nome = itemView.findViewById(R.id.plan_nome);
         }
     }
 }
