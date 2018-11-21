@@ -11,7 +11,9 @@
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+
+    </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
@@ -20,6 +22,7 @@
         android:background="@color/viewBg"
         app:menu="@menu/navigation"
         android:layout_gravity="bottom|end">
+
     </android.support.design.widget.BottomNavigationView>
 
 </android.support.design.widget.CoordinatorLayout>

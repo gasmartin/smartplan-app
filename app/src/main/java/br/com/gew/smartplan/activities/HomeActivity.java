@@ -27,54 +27,33 @@ public class HomeActivity extends AppCompatActivity {
     FloatingActionButton btn;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            = item -> {
+                switch (item.getItemId()) {
+                    case R.id.navigation_turmas:
+                        selectedFragment = new TurmaFragment();
+                        break;
+                    case R.id.navigation_planejamentos:
+                        selectedFragment = new PlanejamentoFragment();
+                        break;
+                    case R.id.navigation_perfil:
+                        selectedFragment = new PerfilFragment();
+                        break;
+                }
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_turmas:
-                    selectedFragment = new TurmaFragment();
-                    /*btn.setOnClickListener(v -> {
-                        Intent addTurma = new Intent(HomeActivity.this, AddTurmaActivity.class);
-                        startActivity(addTurma);
-                    });*/
-                    break;
-                case R.id.navigation_planejamentos:
-                    selectedFragment = new PlanejamentoFragment();
-                    /*btn.setOnClickListener(v -> {
-                        Intent addPlanejamento = new Intent(HomeActivity.this, AddPlanejamentoActivity.class);
-                        startActivity(addPlanejamento);
-                    });*/
-                    break;
-                case R.id.navigation_perfil:
-                    selectedFragment = new PerfilFragment();
-                    break;
-            }
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-            return true;
-        }
-    };
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+                return true;
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        selectedFragment = new TurmaFragment();
+        selectedFragment = new PlanejamentoFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        //btn = findViewById(R.id.add_button);
-        /*btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent addTurma = new Intent(HomeActivity.this, AddTurmaActivity.class);
-                startActivity(addTurma);
-            }
-        });*/
     }
 
     @Override
@@ -99,7 +78,6 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Take appropriate action for each action item click
         switch (item.getItemId()) {
             case R.id.action_logout:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -114,11 +92,8 @@ public class HomeActivity extends AppCompatActivity {
                         finish();
                     }
                 })
-                .setNegativeButton(R.string.nao, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        
-                    }
+                .setNegativeButton(R.string.nao, (dialog, which) -> {
+
                 });
 
                 builder.show();

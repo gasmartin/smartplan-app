@@ -28,7 +28,6 @@ public class AddPlanejamentoActivity extends AppCompatActivity {
 
     private EditText txtNome;
     private EditText txtDescricao;
-    private Spinner spinner;
     private Button insert;
 
     private EditText dataInicio;
@@ -49,12 +48,11 @@ public class AddPlanejamentoActivity extends AppCompatActivity {
 
         txtNome = findViewById(R.id.txt_nome_planejamento);
         txtDescricao = findViewById(R.id.txt_descricao_planejamento);
-        spinner = findViewById(R.id.spinner_cores);
 
         insert = findViewById(R.id.insert_planejamento);
         insert.setOnClickListener(v -> {
             PlanejamentoClient pc = RetrofitClient.getRetrofit().create(PlanejamentoClient.class);
-            Planejamento p = new Planejamento(1, txtNome.getText().toString(), txtDescricao.getText().toString(),
+            Planejamento p = new Planejamento(txtNome.getText().toString(), txtDescricao.getText().toString(),
                     dataInicio.getText().toString(), dataFinal.getText().toString());
             Call c = pc.insertPlanejamento(id, p);
             c.enqueue(new Callback() {

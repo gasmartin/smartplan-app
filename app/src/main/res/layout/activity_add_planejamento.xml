@@ -31,18 +31,6 @@
             android:inputType="textPersonName" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Cor" />
-
-        <Spinner
-            android:id="@+id/spinner_cores"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:entries="@array/cores" />
-
-        <TextView
             android:id="@+id/textView14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

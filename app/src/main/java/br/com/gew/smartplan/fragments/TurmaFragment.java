@@ -1,6 +1,7 @@
 package br.com.gew.smartplan.fragments;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,16 +9,24 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import br.com.gew.smartplan.R;
+import br.com.gew.smartplan.activities.AddTurmaActivity;
+import br.com.gew.smartplan.activities.HomeActivity;
 import br.com.gew.smartplan.adapters.TurmaAdapter;
+import br.com.gew.smartplan.client.RetrofitClient;
+import br.com.gew.smartplan.client.TurmaClient;
+import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Turma;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -26,9 +35,8 @@ public class TurmaFragment extends Fragment {
     private static final String TAG = "TurmaFragment";
 
     RecyclerView rvTurmas;
-
-    private ArrayList<String> nomes = new ArrayList<>();
-    private ArrayList<Integer> salas = new ArrayList<>();
+    List<Turma> turmas;
+    Button add;
 
     private Long id;
 
@@ -48,24 +56,32 @@ public class TurmaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvTurmas = getView().findViewById(R.id.rv_turmas);
 
+        add = getView().findViewById(R.id.add);
+        add.setOnClickListener(v -> {
+            getActivity().startActivity(new Intent(getActivity(), AddTurmaActivity.class));
+        });
+
         SharedPreferences preferences = getContext().getSharedPreferences("UserPreferences", MODE_PRIVATE);
         id = preferences.getLong("professor_id", 0);
 
-        List<Turma> turmaList = null;
-
-        //Retornar lista
-
-        if(turmaList != null){
-            for (Turma turma : turmaList){
-                nomes.add(turma.getNome());
-                salas.add(turma.getSala());
+        TurmaClient tc = RetrofitClient.getRetrofit().create(TurmaClient.class);
+        Call<List<Turma>> c = tc.returnListByProfessorId(id);
+        c.enqueue(new Callback<List<Turma>>() {
+            @Override
+            public void onResponse(Call<List<Turma>> call, Response<List<Turma>> response) {
+                turmas = response.body();
             }
-        }
 
-        Log.d("Fragment", Integer.toString(nomes.size()));
-        Log.d("Fragment", Integer.toString(salas.size()));
+            @Override
+            public void onFailure(Call<List<Turma>> call, Throwable t) {
 
-        TurmaAdapter adapter = new TurmaAdapter(getContext(), nomes, salas);
+            }
+        });
+
+        if(turmas == null) Utils.showMessage(getContext(), "null", 0);
+        else Utils.showMessage(getContext(), "não null", 0);
+
+        TurmaAdapter adapter = new TurmaAdapter(getContext(), turmas);
         rvTurmas.setAdapter(adapter);
         rvTurmas.setLayoutManager(new LinearLayoutManager(getContext()));
     }

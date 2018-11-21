@@ -7,16 +7,12 @@ import java.io.Serializable;
 public class Turma implements Serializable {
 
     @SerializedName("id") private Long id;
-    @SerializedName("cor") private Integer cor;
     @SerializedName("sala") private Integer sala;
     @SerializedName("nome") private String nome;
-    @SerializedName("descricao") private String descricao;
 
-    public Turma(Integer cor, Integer sala, String nome, String descricao) {
-        this.cor = cor;
+    public Turma(Integer sala, String nome) {
         this.sala = sala;
         this.nome = nome;
-        this.descricao = descricao;
     }
 
     public Long getId() {
@@ -27,13 +23,6 @@ public class Turma implements Serializable {
         this.id = id;
     }
 
-    public Integer getCor() {
-        return cor;
-    }
-
-    public void setCor(Integer cor) {
-        this.cor = cor;
-    }
 
     public Integer getSala() {
         return sala;
@@ -51,11 +40,4 @@ public class Turma implements Serializable {
         this.nome = nome;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
 }

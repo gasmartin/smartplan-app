@@ -12,21 +12,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.gew.smartplan.R;
+import br.com.gew.smartplan.model.Turma;
 
 public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.ViewHolder>{
 
     private static final String TAG = "TurmaAdapter";
 
     private Context context;
-    private ArrayList<String> nomes;
-    private ArrayList<Integer> salas;
+    private List<Turma> turmas;
 
-    public TurmaAdapter(Context context, ArrayList<String> nomes, ArrayList<Integer> salas) {
+    public TurmaAdapter(Context context, List<Turma> turmas) {
         this.context = context;
-        this.nomes = nomes;
-        this.salas = salas;
+        this.turmas = turmas;
     }
 
     @NonNull
@@ -41,21 +41,15 @@ public class TurmaAdapter extends RecyclerView.Adapter<TurmaAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
 
-        holder.nomeTurma.setText(nomes.get(position));
-        //if(holder.salaTurma == null) Log.d(TAG, "Masoq??");
-        holder.salaTurma.setText(Integer.toString(salas.get(position)));
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on: " + nomes.get(position));
-                Toast.makeText(context, nomes.get(position), Toast.LENGTH_SHORT).show();
-            }
-        });
+        Turma turma = turmas.get(position);
+
+        holder.nomeTurma.setText(turma.getNome());
+        holder.salaTurma.setText("Sala " + Integer.toString(turma.getSala()));
     }
 
     @Override
     public int getItemCount() {
-        return nomes.size();
+        return (turmas == null) ? 0 : turmas.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

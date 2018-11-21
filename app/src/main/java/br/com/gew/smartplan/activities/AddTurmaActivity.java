@@ -23,11 +23,8 @@ public class AddTurmaActivity extends AppCompatActivity {
 
     private Long id;
 
-    private Spinner cores;
-
     private EditText turmaNome;
     private EditText turmaSala;
-    private EditText turmaDescricao;
 
     private Button insert;
 
@@ -45,16 +42,14 @@ public class AddTurmaActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         this.id = preferences.getLong("professor_id", 0);
 
-        cores = findViewById(R.id.spinner_cores);
 
         turmaNome = findViewById(R.id.txt_turma_nome);
         turmaSala = findViewById(R.id.txt_turma_sala);
-        turmaDescricao = findViewById(R.id.txt_turma_descricao);
 
         insert = findViewById(R.id.insert_turma);
         insert.setOnClickListener(v -> {
             TurmaClient tc = RetrofitClient.getRetrofit().create(TurmaClient.class);
-            Turma t = new Turma(1, Integer.parseInt(turmaSala.getText().toString()), turmaNome.getText().toString(), turmaDescricao.getText().toString());
+            Turma t = new Turma(Integer.parseInt(turmaSala.getText().toString()), turmaNome.getText().toString());
             Call c = tc.insertTurma(id, t);
             c.enqueue(new Callback() {
                 @Override
