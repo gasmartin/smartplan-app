@@ -1,11 +1,9 @@
 package br.com.gew.smartplan.model;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Nota {
 
-    @SerializedName("id") private Long id;
-    @SerializedName("nota") private Double nota;
+    private Long id;
+    private Double nota;
 
     public Nota(Double nota) {
         this.nota = nota;

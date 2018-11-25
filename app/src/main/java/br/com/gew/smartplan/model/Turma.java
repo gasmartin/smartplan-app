@@ -1,14 +1,10 @@
 package br.com.gew.smartplan.model;
 
-import com.google.gson.annotations.SerializedName;
+public class Turma {
 
-import java.io.Serializable;
-
-public class Turma implements Serializable {
-
-    @SerializedName("id") private Long id;
-    @SerializedName("sala") private Integer sala;
-    @SerializedName("nome") private String nome;
+    private Long id;
+    private Integer sala;
+    private String nome;
 
     public Turma(Integer sala, String nome) {
         this.sala = sala;
@@ -22,7 +18,6 @@ public class Turma implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
 
     public Integer getSala() {
         return sala;

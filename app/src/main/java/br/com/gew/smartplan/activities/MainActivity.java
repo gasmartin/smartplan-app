@@ -2,21 +2,18 @@ package br.com.gew.smartplan.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.util.concurrent.ExecutionException;
+
 import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.client.ProfessorClient;
-import br.com.gew.smartplan.client.RetrofitClient;
 import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Professor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,36 +40,28 @@ public class MainActivity extends AppCompatActivity {
 
         btnEntrar = findViewById(R.id.btnEntrar);
         btnEntrar.setOnClickListener(v -> {
-            ProfessorClient pc = RetrofitClient.getRetrofit().create(ProfessorClient.class);
-            Call c = pc.executarLogin(txtUser.getText().toString(), txtSenha.getText().toString());
-            c.enqueue(new Callback() {
-                @Override
-                public void onResponse(Call call, Response response) {
-                    if(response.body() != null){
 
-                        Professor p = (Professor) response.body();
+            Professor p = null;
+            try {
+                p = new Login().execute(txtUser.getText().toString(), txtSenha.getText().toString()).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
 
-                        SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
+            if(p != null){
+                SharedPreferences sharedPreferences = getSharedPreferences(String.valueOf(R.string.shared), MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putLong("professor_id", p.getId());
+                editor.apply();
 
-                        editor.putLong("professor_id", p.getId());
-                        editor.commit();
-
-                        Intent homeActivity = new Intent(MainActivity.this, HomeActivity.class);
-                        startActivity(homeActivity);
-                        finish();
-                    }
-                    else{
-                        Utils.showMessage(getApplicationContext(), "Não encontrado", 0);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call call, Throwable t) {
-                    Utils.showMessage(getApplicationContext(), "Alguma coisa deu errado", 0);
-                    Log.d("Failure: ", t.getMessage());
-                }
-            });
+                Intent home = new Intent(this, HomeActivity.class);
+                startActivity(home);
+            }
+            else{
+                Utils.showMessage(getApplicationContext(), "Usuário não encontrado", 0);
+            }
         });
 
         btnCadastrar = findViewById(R.id.btnCadastrar);
@@ -80,5 +69,18 @@ public class MainActivity extends AppCompatActivity {
             Intent telaCadastrar = new Intent(MainActivity.this, CadastroActivity.class);
             startActivity(telaCadastrar);
         });
+    }
+
+    private class Login extends AsyncTask<String, Void, Professor>{
+
+        @Override
+        protected Professor doInBackground(String... strings) {
+            return new ProfessorClient().login(strings[0], strings[1]);
+        }
+
+        @Override
+        protected void onPostExecute(Professor p) {
+            super.onPostExecute(p);
+        }
     }
 }

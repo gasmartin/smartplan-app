@@ -14,19 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import java.util.ArrayList;
 import java.util.List;
 import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.activities.AddTurmaActivity;
-import br.com.gew.smartplan.activities.HomeActivity;
 import br.com.gew.smartplan.adapters.TurmaAdapter;
-import br.com.gew.smartplan.client.RetrofitClient;
-import br.com.gew.smartplan.client.TurmaClient;
 import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Turma;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -63,20 +57,6 @@ public class TurmaFragment extends Fragment {
 
         SharedPreferences preferences = getContext().getSharedPreferences("UserPreferences", MODE_PRIVATE);
         id = preferences.getLong("professor_id", 0);
-
-        TurmaClient tc = RetrofitClient.getRetrofit().create(TurmaClient.class);
-        Call<List<Turma>> c = tc.returnListByProfessorId(id);
-        c.enqueue(new Callback<List<Turma>>() {
-            @Override
-            public void onResponse(Call<List<Turma>> call, Response<List<Turma>> response) {
-                turmas = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<List<Turma>> call, Throwable t) {
-
-            }
-        });
 
         if(turmas == null) Utils.showMessage(getContext(), "null", 0);
         else Utils.showMessage(getContext(), "não null", 0);

@@ -1,13 +1,11 @@
 package br.com.gew.smartplan.model;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Aluno {
 
-    @SerializedName("id") private Long id;
-    @SerializedName("nome") private String nome;
-    @SerializedName("obs") private String obs;
-    @SerializedName("email") private String email;
+    private Long id;
+    private String nome;
+    private String obs;
+    private String email;
 
     public Aluno(String nome, String obs, String email) {
         this.nome = nome;

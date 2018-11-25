@@ -4,24 +4,15 @@ import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import java.util.Calendar;
 
 import br.com.gew.smartplan.R;
-import br.com.gew.smartplan.client.PlanejamentoClient;
-import br.com.gew.smartplan.client.RetrofitClient;
 import br.com.gew.smartplan.helpers.Utils;
-import br.com.gew.smartplan.model.Planejamento;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class AddPlanejamentoActivity extends AppCompatActivity {
@@ -50,23 +41,9 @@ public class AddPlanejamentoActivity extends AppCompatActivity {
         txtDescricao = findViewById(R.id.txt_descricao_planejamento);
 
         insert = findViewById(R.id.insert_planejamento);
+        //MODIFICAR
         insert.setOnClickListener(v -> {
-            PlanejamentoClient pc = RetrofitClient.getRetrofit().create(PlanejamentoClient.class);
-            Planejamento p = new Planejamento(txtNome.getText().toString(), txtDescricao.getText().toString(),
-                    dataInicio.getText().toString(), dataFinal.getText().toString());
-            Call c = pc.insertPlanejamento(id, p);
-            c.enqueue(new Callback() {
-                @Override
-                public void onResponse(Call call, Response response) {
-                    finish();
-                }
 
-                @Override
-                public void onFailure(Call call, Throwable t) {
-                    Utils.showMessage(getApplicationContext(), "Deu errado, mano", 0);
-                    Log.d("AddPlanejamentoActivity", t.getMessage());
-                }
-            });
         });
 
         SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);

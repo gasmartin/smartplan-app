@@ -1,23 +1,18 @@
 package br.com.gew.smartplan.activities;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.concurrent.ExecutionException;
+
 import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.client.ProfessorClient;
-import br.com.gew.smartplan.client.RetrofitClient;
 import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Professor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -44,22 +39,29 @@ public class CadastroActivity extends AppCompatActivity {
 
         btnCadastrar = findViewById(R.id.btnCadastrar);
         btnCadastrar.setOnClickListener(v -> {
-            ProfessorClient pc = RetrofitClient.getRetrofit().create(ProfessorClient.class);
-            Professor professor = new Professor(txtNome.getText().toString(), txtEmail.getText().toString(),
-                    txtUser.getText().toString(), txtSenha.getText().toString());
-            Call c = pc.cadastrar(professor);
-            c.enqueue(new Callback() {
-                @Override
-                public void onResponse(Call call, Response response) {
-                    finish();
+            if (!"".equals(txtNome.getText().toString()) || !"".equals(txtUser.getText().toString()) ||
+                    !"".equals(txtSenha.getText().toString()) || !"".equals(txtConfirmar.getText().toString())) {
+                if (txtSenha.getText().toString().equals(txtConfirmar.getText().toString())) {
+                    Professor p = new Professor(txtNome.getText().toString(), txtEmail.getText().toString(),
+                            txtUser.getText().toString(), txtSenha.getText().toString());
+                    Boolean result = false;
+                    try {
+                        result = new AddProfessor().execute(p).get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                    if (result) {
+                        Utils.showMessage(getApplicationContext(), "Oba!", 0);
+                        finish();
+                    } else {
+                        Utils.showMessage(getApplicationContext(), "Oops!", 0);
+                    }
                 }
-
-                @Override
-                public void onFailure(Call call, Throwable t) {
-                    Utils.showMessage(getApplicationContext(), "Alguma coisa deu errado", 0);
-                    Log.d("Failure: ", t.getMessage());
-                }
-            });
+            } else {
+                Utils.showMessage(getApplicationContext(), "Um campo obrigatório não está preenchido.", 0);
+            }
         });
     }
 
@@ -71,6 +73,19 @@ public class CadastroActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private class AddProfessor extends AsyncTask<Professor, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Professor... professores) {
+            return new ProfessorClient().cadastrar(professores[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean b) {
+            super.onPostExecute(b);
         }
     }
 }

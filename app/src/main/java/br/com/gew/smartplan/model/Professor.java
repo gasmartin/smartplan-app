@@ -1,22 +1,32 @@
 package br.com.gew.smartplan.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
 public class Professor implements Serializable {
 
-    @SerializedName("id") private Long id;
-    @SerializedName("nome") private String nome;
-    @SerializedName("email") private String email;
-    @SerializedName("username") private String username;
-    @SerializedName("senha") private String senha;
+    @JsonProperty("id")
+    private Long id;
+    @JsonProperty("nome")
+    private String nome;
+    @JsonProperty("email")
+    private String email;
+    @JsonProperty("username")
+    private String username;
+    @JsonProperty("senha")
+    private String senha;
 
     public Professor(String nome, String email, String username, String senha) {
+        super();
         this.nome = nome;
         this.email = email;
         this.username = username;
         this.senha = senha;
+    }
+
+    public Professor() {
+        super();
     }
 
     public Long getId() {

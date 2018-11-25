@@ -1,16 +1,13 @@
 package br.com.gew.smartplan.model;
 
-import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+public class Evento {
 
-public class Evento implements Serializable {
-
-    @SerializedName("id") private Long id;
-    @SerializedName("nome") private String nome;
-    @SerializedName("descricao") private String descricao;
-    @SerializedName("tipo") private Character tipo;
-    @SerializedName("dataEvento") private String dataEvento;
+    private Long id;
+    private String nome;
+    private String descricao;
+    private Character tipo;
+    private String dataEvento;
 
     public Evento(String nome, String descricao, Character tipo, String dataEvento) {
         this.nome = nome;
