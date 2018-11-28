@@ -12,8 +12,10 @@ import java.util.concurrent.ExecutionException;
 
 import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.client.ProfessorClient;
+import br.com.gew.smartplan.client.UsuarioClient;
 import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Professor;
+import br.com.gew.smartplan.model.Usuario;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,20 +43,20 @@ public class MainActivity extends AppCompatActivity {
         btnEntrar = findViewById(R.id.btnEntrar);
         btnEntrar.setOnClickListener(v -> {
 
-            Professor p = null;
+            Usuario u = null;
             try {
-                p = new Login().execute(txtUser.getText().toString(), txtSenha.getText().toString()).get();
+                u = new Login().execute(txtUser.getText().toString(), txtSenha.getText().toString()).get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
 
-            if(p != null){
-                SharedPreferences sharedPreferences = getSharedPreferences(String.valueOf(R.string.shared), MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putLong("professor_id", p.getId());
-                editor.apply();
+            if(u != null){
+                //SharedPreferences sharedPreferences = getSharedPreferences(String.valueOf(R.string.shared), MODE_PRIVATE);
+                //SharedPreferences.Editor editor = sharedPreferences.edit();
+                //editor.putLong("username", u.getUsername());
+                //editor.apply();
 
                 Intent home = new Intent(this, HomeActivity.class);
                 startActivity(home);
@@ -71,16 +73,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private class Login extends AsyncTask<String, Void, Professor>{
+    private class Login extends AsyncTask<String, Void, Usuario>{
 
         @Override
-        protected Professor doInBackground(String... strings) {
-            return new ProfessorClient().login(strings[0], strings[1]);
+        protected Usuario doInBackground(String... strings) {
+            return new UsuarioClient().login(strings[0], strings[1]);
         }
 
         @Override
-        protected void onPostExecute(Professor p) {
-            super.onPostExecute(p);
+        protected void onPostExecute(Usuario u) {
+            super.onPostExecute(u);
         }
     }
 }

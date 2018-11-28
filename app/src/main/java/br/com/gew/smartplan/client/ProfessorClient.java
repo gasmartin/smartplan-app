@@ -15,25 +15,10 @@ import br.com.gew.smartplan.model.Professor;
 
 public class ProfessorClient {
 
-    private final String BASE_URL = "http://192.168.0.20:3000/api/professor/";
+    private final String BASE_URL = "http://192.168.56.1:3000/api/professor/";
     private  RestTemplate rt = new RestTemplate();
 
-    public Professor login(String username, String password){
-        String url = BASE_URL + "executar_login/" + username + "/" + password;
-        Professor professor = null;
-        try{
-            professor = rt.exchange(url, HttpMethod.GET,
-                    null, new ParameterizedTypeReference<Professor>() {}
-            ).getBody();
-        }
-        catch (RestClientException ex){
-            ex.printStackTrace();
-        }
-
-        return professor;
-    }
-
-    public boolean cadastrar(Professor professor){
+    public Professor cadastrar(Professor professor){
 
         String url = BASE_URL + "insert";
 
@@ -46,13 +31,10 @@ public class ProfessorClient {
 
             json.put("nome", professor.getNome());
             json.put("email", professor.getEmail());
-            json.put("username", professor.getUsername());
-            json.put("senha", professor.getSenha());
 
             HttpEntity<String> entity = new HttpEntity<>(json.toString(), headers);
-            rt.postForEntity(url, entity, null);
 
-            return true;
+            return rt.postForObject(url, entity, Professor.class);
         }
         catch (RestClientException ex){
             ex.printStackTrace();
@@ -60,7 +42,7 @@ public class ProfessorClient {
             e.printStackTrace();
         }
 
-        return false;
+        return null;
     }
 
     public boolean alterarDados(Long id, Professor professor){
@@ -74,8 +56,6 @@ public class ProfessorClient {
 
             json.put("nome", professor.getNome());
             json.put("email", professor.getEmail());
-            json.put("username", professor.getUsername());
-            json.put("senha", professor.getSenha());
 
             HttpEntity<String> entity = new HttpEntity<>(json.toString(), headers);
 

@@ -12,17 +12,11 @@ public class Professor implements Serializable {
     private String nome;
     @JsonProperty("email")
     private String email;
-    @JsonProperty("username")
-    private String username;
-    @JsonProperty("senha")
-    private String senha;
 
-    public Professor(String nome, String email, String username, String senha) {
+    public Professor(String nome, String email) {
         super();
         this.nome = nome;
         this.email = email;
-        this.username = username;
-        this.senha = senha;
     }
 
     public Professor() {
@@ -32,6 +26,7 @@ public class Professor implements Serializable {
     public Long getId() {
         return this.id;
     }
+    public void setId(Long id){ this.id = id; }
 
     public String getNome() {
         return this.nome;
@@ -43,23 +38,8 @@ public class Professor implements Serializable {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getSenha() {
-        return this.senha;
-    }
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 }
 

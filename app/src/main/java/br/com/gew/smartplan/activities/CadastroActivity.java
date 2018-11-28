@@ -1,6 +1,9 @@
 package br.com.gew.smartplan.activities;
 
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -42,22 +45,26 @@ public class CadastroActivity extends AppCompatActivity {
             if (!"".equals(txtNome.getText().toString()) || !"".equals(txtUser.getText().toString()) ||
                     !"".equals(txtSenha.getText().toString()) || !"".equals(txtConfirmar.getText().toString())) {
                 if (txtSenha.getText().toString().equals(txtConfirmar.getText().toString())) {
-                    Professor p = new Professor(txtNome.getText().toString(), txtEmail.getText().toString(),
-                            txtUser.getText().toString(), txtSenha.getText().toString());
-                    Boolean result = false;
+                    Professor p = new Professor(txtNome.getText().toString(), txtEmail.getText().toString());
                     try {
-                        result = new AddProfessor().execute(p).get();
+                        p = new AddProfessor().execute(p).get();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
-                    if (result) {
+                    if (p != null) {
+
+                        //USAR O SHARED PREFERENCES AQUI E FAZER UM IF NA MAINACTIVITY
+
                         Utils.showMessage(getApplicationContext(), "Oba!", 0);
                         finish();
                     } else {
-                        Utils.showMessage(getApplicationContext(), "Oops!", 0);
+                        Utils.showMessage(getApplicationContext(), "Oops! É nulo.", 0);
                     }
+                }
+                else{
+                    Utils.showMessage(getApplicationContext(), "As senhas devem ser iguais.", 0);
                 }
             } else {
                 Utils.showMessage(getApplicationContext(), "Um campo obrigatório não está preenchido.", 0);
@@ -76,16 +83,16 @@ public class CadastroActivity extends AppCompatActivity {
         }
     }
 
-    private class AddProfessor extends AsyncTask<Professor, Void, Boolean> {
+    private class AddProfessor extends AsyncTask<Professor, Void, Professor> {
 
         @Override
-        protected Boolean doInBackground(Professor... professores) {
+        protected Professor doInBackground(Professor... professores) {
             return new ProfessorClient().cadastrar(professores[0]);
         }
 
         @Override
-        protected void onPostExecute(Boolean b) {
-            super.onPostExecute(b);
+        protected void onPostExecute(Professor p) {
+            super.onPostExecute(p);
         }
     }
 }
