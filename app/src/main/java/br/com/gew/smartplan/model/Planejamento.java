@@ -1,14 +1,26 @@
 package br.com.gew.smartplan.model;
 
-public class Planejamento {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+
+public class Planejamento implements Serializable {
+
+    @JsonProperty("id")
     private Long id;
+    @JsonProperty("nome")
     private String nome;
+    @JsonProperty("descricao")
     private String descricao;
+    @JsonProperty("data_inicio")
     private String dataInicio;
+    @JsonProperty("data_final")
     private String dataFinal;
 
+    public Planejamento(){ super(); }
+
     public Planejamento(String nome, String descricao, String dataInicio, String dataFinal) {
+        super();
         this.nome = nome;
         this.descricao = descricao;
         this.dataInicio = dataInicio;

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -29,12 +30,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
-        Long verify = preferences.getLong("professor_id", 0);
-
-        if (verify != 0) {
-            Intent homeActivity = new Intent(MainActivity.this, HomeActivity.class);
-            startActivity(homeActivity);
+        SharedPreferences preferences = getSharedPreferences(String.valueOf(R.string.shared), MODE_PRIVATE);
+        try {
+            if (new Login().execute(preferences.getString("professor_username", ""), preferences.getString("professor_password", "")).get() != null) {
+                Intent homeActivity = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(homeActivity);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
 
         txtUser = findViewById(R.id.txtUser);
@@ -51,12 +56,11 @@ public class MainActivity extends AppCompatActivity {
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-
             if(u != null){
-                //SharedPreferences sharedPreferences = getSharedPreferences(String.valueOf(R.string.shared), MODE_PRIVATE);
-                //SharedPreferences.Editor editor = sharedPreferences.edit();
-                //editor.putLong("username", u.getUsername());
-                //editor.apply();
+                //MUDAR DEPOIS
+                SharedPreferences sp = getSharedPreferences(String.valueOf(R.string.shared), MODE_PRIVATE);
+                sp.edit().putLong("professor_id", u.getProfessor().getId())
+                        .putString("professor_username", u.getUsername()).putString("professor_password", u.getPassword()).apply();
 
                 Intent home = new Intent(this, HomeActivity.class);
                 startActivity(home);
@@ -70,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         btnCadastrar.setOnClickListener(v -> {
             Intent telaCadastrar = new Intent(MainActivity.this, CadastroActivity.class);
             startActivity(telaCadastrar);
+            finish();
         });
     }
 

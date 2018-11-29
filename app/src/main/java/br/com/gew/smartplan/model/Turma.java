@@ -1,12 +1,22 @@
 package br.com.gew.smartplan.model;
 
-public class Turma {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+
+public class Turma implements Serializable {
+
+    @JsonProperty("id")
     private Long id;
+    @JsonProperty("sala")
     private Integer sala;
+    @JsonProperty("nome")
     private String nome;
 
+    public Turma(){ super(); }
+
     public Turma(Integer sala, String nome) {
+        super();
         this.sala = sala;
         this.nome = nome;
     }

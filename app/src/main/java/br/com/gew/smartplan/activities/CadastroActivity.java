@@ -1,11 +1,12 @@
 package br.com.gew.smartplan.activities;
 
-import android.content.ComponentName;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,8 +15,10 @@ import java.util.concurrent.ExecutionException;
 
 import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.client.ProfessorClient;
+import br.com.gew.smartplan.client.UsuarioClient;
 import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Professor;
+import br.com.gew.smartplan.model.Usuario;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -45,25 +48,37 @@ public class CadastroActivity extends AppCompatActivity {
             if (!"".equals(txtNome.getText().toString()) || !"".equals(txtUser.getText().toString()) ||
                     !"".equals(txtSenha.getText().toString()) || !"".equals(txtConfirmar.getText().toString())) {
                 if (txtSenha.getText().toString().equals(txtConfirmar.getText().toString())) {
-                    Professor p = new Professor(txtNome.getText().toString(), txtEmail.getText().toString());
+
+                    Professor p = null;
                     try {
-                        p = new AddProfessor().execute(p).get();
+                        p = new AddProfessor().execute(txtNome.getText().toString(), txtEmail.getText().toString()).get();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
+
                     if (p != null) {
+                        Usuario u = null;
+                        try {
+                            u = new AddUsuario().execute(Long.toString(p.getId()), txtUser.getText().toString(), txtSenha.getText().toString()).get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+                        if(u != null){
+                            SharedPreferences sp = getSharedPreferences(String.valueOf(R.string.shared), MODE_PRIVATE);
+                            sp.edit().putLong("professor_id", p.getId()).putString("professor_username", u.getUsername())
+                                    .putString("professor_password", u.getPassword()).apply();
 
-                        //USAR O SHARED PREFERENCES AQUI E FAZER UM IF NA MAINACTIVITY
-
-                        Utils.showMessage(getApplicationContext(), "Oba!", 0);
-                        finish();
-                    } else {
-                        Utils.showMessage(getApplicationContext(), "Oops! É nulo.", 0);
+                            Utils.showMessage(getApplicationContext(), "Oba!", 0);
+                            Intent mainActivity = new Intent(this, MainActivity.class);
+                            startActivity(mainActivity);
+                            finish();
+                        }
                     }
-                }
-                else{
+                } else {
                     Utils.showMessage(getApplicationContext(), "As senhas devem ser iguais.", 0);
                 }
             } else {
@@ -76,6 +91,8 @@ public class CadastroActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                Intent mainActivity = new Intent(this, MainActivity.class);
+                startActivity(mainActivity);
                 finish();
                 return true;
             default:
@@ -83,16 +100,36 @@ public class CadastroActivity extends AppCompatActivity {
         }
     }
 
-    private class AddProfessor extends AsyncTask<Professor, Void, Professor> {
+    @Override
+    public void onBackPressed() {
+        Intent mainActivity = new Intent(this, MainActivity.class);
+        startActivity(mainActivity);
+        finish();
+    }
+
+    private class AddProfessor extends AsyncTask<String, Void, Professor> {
 
         @Override
-        protected Professor doInBackground(Professor... professores) {
-            return new ProfessorClient().cadastrar(professores[0]);
+        protected Professor doInBackground(String... strings) {
+            return new ProfessorClient().cadastrar(new Professor(strings[0], strings[1]));
         }
 
         @Override
         protected void onPostExecute(Professor p) {
             super.onPostExecute(p);
+        }
+    }
+
+    private class AddUsuario extends AsyncTask<String, Void, Usuario> {
+
+        @Override
+        protected Usuario doInBackground(String... strings) {
+            return new UsuarioClient().insert(strings[0], new Usuario(strings[1], strings[2]));
+        }
+
+        @Override
+        protected void onPostExecute(Usuario u) {
+            super.onPostExecute(u);
         }
     }
 }

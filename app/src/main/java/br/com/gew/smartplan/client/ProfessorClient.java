@@ -11,11 +11,14 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 import br.com.gew.smartplan.model.Professor;
+import br.com.gew.smartplan.model.Turma;
 
 public class ProfessorClient {
 
-    private final String BASE_URL = "http://192.168.56.1:3000/api/professor/";
+    private final String BASE_URL = "http://192.168.0.20:3000/api/professor/";
     private  RestTemplate rt = new RestTemplate();
 
     public Professor cadastrar(Professor professor){
@@ -70,5 +73,18 @@ public class ProfessorClient {
         }
 
         return false;
+    }
+
+    public List<Turma> getTurmasByProfessorId(Long id){
+        String url = BASE_URL + id + "/turmas";
+        List<Turma> turmas = null;
+        try{
+            turmas = rt.exchange(url, HttpMethod.GET,
+                    null, new ParameterizedTypeReference<List<Turma>>(){}).getBody();
+        }
+        catch (RestClientException e){
+            e.printStackTrace();
+        }
+        return turmas;
     }
 }

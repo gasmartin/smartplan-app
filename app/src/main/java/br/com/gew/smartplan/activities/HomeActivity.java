@@ -84,9 +84,9 @@ public class HomeActivity extends AppCompatActivity {
                 builder.setTitle("Deseja realmente sair?").setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences.Editor prefsEditor = getSharedPreferences("UserPreferences", MODE_PRIVATE).edit();
+                        SharedPreferences.Editor prefsEditor = getSharedPreferences(String.valueOf(R.string.shared), MODE_PRIVATE).edit();
                         prefsEditor.clear();
-                        prefsEditor.commit();
+                        prefsEditor.apply();
                         Intent mainActivity = new Intent(HomeActivity.this, MainActivity.class);
                         startActivity(mainActivity);
                         finish();

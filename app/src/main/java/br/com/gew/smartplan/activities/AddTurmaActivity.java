@@ -1,13 +1,21 @@
 package br.com.gew.smartplan.activities;
 
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.concurrent.ExecutionException;
+
 import br.com.gew.smartplan.R;
+import br.com.gew.smartplan.client.TurmaClient;
+import br.com.gew.smartplan.helpers.Utils;
+import br.com.gew.smartplan.model.Planejamento;
+import br.com.gew.smartplan.model.Turma;
+import br.com.gew.smartplan.model.Usuario;
 
 public class AddTurmaActivity extends AppCompatActivity {
 
@@ -29,7 +37,7 @@ public class AddTurmaActivity extends AppCompatActivity {
         SharedPreferences sf = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         id = sf.getLong("professor_id", 0);
 
-        SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(String.valueOf(R.string.shared), MODE_PRIVATE);
         this.id = preferences.getLong("professor_id", 0);
 
 
@@ -37,9 +45,20 @@ public class AddTurmaActivity extends AppCompatActivity {
         turmaSala = findViewById(R.id.txt_turma_sala);
 
         insert = findViewById(R.id.insert_turma);
-        //MODIFICAR
         insert.setOnClickListener(v -> {
-
+            Turma turma = null;
+            try {
+                turma = new AddTurma().execute(Long.toString(id), turmaSala.getText().toString(), turmaNome.getText().toString()).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            if(turma != null){
+                Utils.showMessage(getApplicationContext(), "Inserido com sucesso!", 0);
+                finish();
+            }
+            else Utils.showMessage(getApplicationContext(), "Algum erro!", 0);
         });
     }
 
@@ -51,6 +70,17 @@ public class AddTurmaActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private class AddTurma extends AsyncTask<String, Void, Turma>{
+        @Override
+        protected Turma doInBackground(String... strings) {
+            return new TurmaClient().insert(strings[0], new Turma(Integer.parseInt(strings[1]), strings[2]));
+        }
+        @Override
+        protected void onPostExecute(Turma t) {
+            super.onPostExecute(t);
         }
     }
 }
