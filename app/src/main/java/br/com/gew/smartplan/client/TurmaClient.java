@@ -14,15 +14,16 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.gew.smartplan.helpers.Utils;
+import br.com.gew.smartplan.model.Aluno;
 import br.com.gew.smartplan.model.Turma;
 
 public class TurmaClient {
 
-    private static final String BASE_URL = "http://192.168.0.20:3000/api/turma/";
     private RestTemplate rt = new RestTemplate();
 
     public Turma insert(String id, Turma turma){
-        String url = BASE_URL + "insert/" + id;
+        String url = Utils.BASE_URL + "turma/insert/" + id;
 
         try{
             rt.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
@@ -44,5 +45,18 @@ public class TurmaClient {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<Aluno> getAlunosByTurmaId(Long id){
+        String url = Utils.BASE_URL + "turma/" + id + "/alunos";
+        List<Aluno> alunos = null;
+        try {
+            alunos = rt.exchange(url, HttpMethod.GET,
+                    null, new ParameterizedTypeReference<List<Aluno>>() {}).getBody();
+        }
+        catch (RestClientException ex){
+            ex.printStackTrace();
+        }
+        return alunos;
     }
 }

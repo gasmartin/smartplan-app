@@ -71,9 +71,6 @@ public class TurmaFragment extends Fragment {
             e.printStackTrace();
         }
 
-        if(turmas == null) Utils.showMessage(getContext(), "null", 0);
-        else Utils.showMessage(getContext(), "não null", 0);
-
         TurmaAdapter adapter = new TurmaAdapter(getContext(), turmas);
         rvTurmas.setAdapter(adapter);
         rvTurmas.setLayoutManager(new LinearLayoutManager(getContext()));

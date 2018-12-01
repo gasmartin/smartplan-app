@@ -21,6 +21,8 @@ import br.com.gew.smartplan.model.Evento;
 
 public class Utils {
 
+    public static final String BASE_URL = "http://192.168.0.20:3000/api/";
+
     public enum Cores{
         AZUl(0), VERDE(1), VERMELHO(2);
 

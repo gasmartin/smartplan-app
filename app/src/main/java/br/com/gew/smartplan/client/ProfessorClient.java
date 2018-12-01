@@ -13,17 +13,17 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Professor;
 import br.com.gew.smartplan.model.Turma;
 
 public class ProfessorClient {
 
-    private final String BASE_URL = "http://192.168.0.20:3000/api/professor/";
     private  RestTemplate rt = new RestTemplate();
 
     public Professor cadastrar(Professor professor){
 
-        String url = BASE_URL + "insert";
+        String url = Utils.BASE_URL + "professor/insert";
 
         try{
             rt.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
@@ -50,7 +50,7 @@ public class ProfessorClient {
 
     public boolean alterarDados(Long id, Professor professor){
 
-        String url = BASE_URL + id;
+        String url = Utils.BASE_URL + "professor/" + id;
 
         try{
             JSONObject json = new JSONObject();
@@ -76,7 +76,7 @@ public class ProfessorClient {
     }
 
     public List<Turma> getTurmasByProfessorId(Long id){
-        String url = BASE_URL + id + "/turmas";
+        String url = Utils.BASE_URL + "professor/" + id + "/turmas";
         List<Turma> turmas = null;
         try{
             turmas = rt.exchange(url, HttpMethod.GET,
@@ -86,5 +86,23 @@ public class ProfessorClient {
             e.printStackTrace();
         }
         return turmas;
+    }
+
+    public Professor getProfessor(Long id){
+        String url = Utils.BASE_URL + "professor/" + id;
+        Professor professor = null;
+        try{
+            professor = rt.exchange(url, HttpMethod.GET,
+                    null, new ParameterizedTypeReference<Professor>() {}).getBody();
+        }
+        catch (RestClientException ex){
+            ex.printStackTrace();
+        }
+        return professor;
+    }
+
+    public void deleteProfessor(Long id){
+        String url = Utils.BASE_URL + "professor/" + id;
+        rt.delete(url);
     }
 }

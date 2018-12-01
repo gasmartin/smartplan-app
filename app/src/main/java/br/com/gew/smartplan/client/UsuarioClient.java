@@ -11,15 +11,15 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Usuario;
 
 public class UsuarioClient {
 
-    private final String BASE_URL = "http://192.168.0.20:3000/api/usuario/";
     private RestTemplate rt = new RestTemplate();
 
     public Usuario login(String username, String password){
-        String url = BASE_URL + "executar_login/" + username + "/" + password;
+        String url = Utils.BASE_URL + "usuario/executar_login/" + username + "/" + password;
         Usuario usuario = null;
         try{
             usuario = rt.exchange(url, HttpMethod.GET,
@@ -35,7 +35,7 @@ public class UsuarioClient {
 
     public Usuario insert(String id, Usuario usuario){
 
-        String url = BASE_URL + "insert/" + id;
+        String url = Utils.BASE_URL + "usuario/insert/" + id;
 
         try{
             rt.getMessageConverters().add(new MappingJackson2HttpMessageConverter());

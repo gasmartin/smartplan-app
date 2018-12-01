@@ -9,15 +9,15 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Planejamento;
 
 public class PlanejamentoClient {
 
-    private static final String BASE_URL = "http://192.168.0.20:3000/api/planejamento/";
     private RestTemplate rt = new RestTemplate();
 
     public Planejamento insert(String id, Planejamento planejamento){
-        String url = BASE_URL + "insert/" + id;
+        String url = Utils.BASE_URL + "planejamento/insert/" + id;
 
         try{
             rt.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
