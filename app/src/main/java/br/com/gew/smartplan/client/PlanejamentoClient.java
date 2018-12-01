@@ -16,7 +16,7 @@ public class PlanejamentoClient {
 
     private RestTemplate rt = new RestTemplate();
 
-    public Planejamento insert(String id, Planejamento planejamento){
+    public Planejamento insert(Long id, Planejamento planejamento){
         String url = Utils.BASE_URL + "planejamento/insert/" + id;
 
         try{
@@ -28,8 +28,8 @@ public class PlanejamentoClient {
 
             json.put("nome", planejamento.getNome());
             json.put("descricao", planejamento.getDescricao());
-            json.put("data_inicio", planejamento.getDataInicio());
-            json.put("data_final", planejamento.getDataFinal());
+            json.put("dataInicio", planejamento.getDataInicio());
+            json.put("dataFinal", planejamento.getDataFinal());
 
             HttpEntity<String> entity = new HttpEntity<>(json.toString(), headers);
 

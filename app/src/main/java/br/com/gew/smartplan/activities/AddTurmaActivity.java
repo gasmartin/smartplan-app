@@ -37,7 +37,7 @@ public class AddTurmaActivity extends AppCompatActivity {
         SharedPreferences sf = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         id = sf.getLong("professor_id", 0);
 
-        SharedPreferences preferences = getSharedPreferences(String.valueOf(R.string.shared), MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         this.id = preferences.getLong("professor_id", 0);
 
 

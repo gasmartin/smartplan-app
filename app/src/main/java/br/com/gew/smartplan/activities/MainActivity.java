@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences preferences = getSharedPreferences(String.valueOf(R.string.shared), MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         try {
             if (new Login().execute(preferences.getString("professor_username", ""), preferences.getString("professor_password", "")).get() != null) {
                 Intent homeActivity = new Intent(MainActivity.this, HomeActivity.class);
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if(u != null){
                 //MUDAR DEPOIS
-                SharedPreferences sp = getSharedPreferences(String.valueOf(R.string.shared), MODE_PRIVATE);
+                SharedPreferences sp = getSharedPreferences("UserPreferences", MODE_PRIVATE);
                 sp.edit().putLong("professor_id", u.getProfessor().getId())
                         .putString("professor_username", u.getUsername()).putString("professor_password", u.getPassword()).apply();
 

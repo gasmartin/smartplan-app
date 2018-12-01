@@ -1,6 +1,7 @@
 package br.com.gew.smartplan.fragments;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import br.com.gew.smartplan.R;
+import br.com.gew.smartplan.activities.AddPlanejamentoActivity;
+import br.com.gew.smartplan.activities.HomeActivity;
 import br.com.gew.smartplan.adapters.PlanejamentoAdapter;
 import br.com.gew.smartplan.model.Planejamento;
 
@@ -30,6 +34,7 @@ public class PlanejamentoFragment extends Fragment {
 
     private static final String TAG = "PlanejamentoFragment";
     private List<Planejamento> planejamentos = new ArrayList<>();
+    private Button insert;
 
     RecyclerView recyclerView;
 
@@ -48,7 +53,7 @@ public class PlanejamentoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView = getView().findViewById(R.id.rv_planejamentos);
+        recyclerView = view.findViewById(R.id.rv_planejamentos);
 
         SharedPreferences preferences = getContext().getSharedPreferences("UserPreferences", MODE_PRIVATE);
         Long id = preferences.getLong("professor_id", 0);
@@ -56,6 +61,11 @@ public class PlanejamentoFragment extends Fragment {
         List<Planejamento> planejamentoList = new ArrayList<>();
 
         //Retornar lista
+
+        insert = view.findViewById(R.id.insert);
+        insert.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), AddPlanejamentoActivity.class));
+        });
 
         if(planejamentos != null){
             PlanejamentoAdapter adapter = new PlanejamentoAdapter(getContext(), planejamentos);

@@ -68,7 +68,7 @@ public class CadastroActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         if(u != null){
-                            SharedPreferences sp = getSharedPreferences(String.valueOf(R.string.shared), MODE_PRIVATE);
+                            SharedPreferences sp = getSharedPreferences("UserPreferences", MODE_PRIVATE);
                             sp.edit().putLong("professor_id", p.getId()).putString("professor_username", u.getUsername())
                                     .putString("professor_password", u.getPassword()).apply();
 

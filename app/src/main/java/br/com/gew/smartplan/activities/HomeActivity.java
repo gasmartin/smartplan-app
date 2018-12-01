@@ -72,7 +72,6 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -81,23 +80,14 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_logout:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Deseja realmente sair?").setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences.Editor prefsEditor = getSharedPreferences(String.valueOf(R.string.shared), MODE_PRIVATE).edit();
-                        prefsEditor.clear();
-                        prefsEditor.apply();
-                        Intent mainActivity = new Intent(HomeActivity.this, MainActivity.class);
-                        startActivity(mainActivity);
-                        finish();
-                    }
+                builder.setTitle("Deseja realmente sair?").setPositiveButton(R.string.sim, (dialog, which) -> {
+                    getSharedPreferences("UserPreferences", MODE_PRIVATE).edit().clear().apply();
+                    Intent mainActivity = new Intent(HomeActivity.this, MainActivity.class);
+                    startActivity(mainActivity);
+                    finish();
                 })
-                .setNegativeButton(R.string.nao, (dialog, which) -> {
-
-                });
-
+                .setNegativeButton(R.string.nao, (dialog, which) -> {});
                 builder.show();
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

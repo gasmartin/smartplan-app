@@ -2,7 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.HomeActivity"
@@ -11,7 +11,7 @@
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
     </FrameLayout>
 
@@ -19,9 +19,9 @@
         android:id="@+id/navigation"
         android:layout_width="411dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:background="@color/viewBg"
-        app:menu="@menu/navigation"
-        android:layout_gravity="bottom|end">
+        app:menu="@menu/navigation">
 
     </android.support.design.widget.BottomNavigationView>
 

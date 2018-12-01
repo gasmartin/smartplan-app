@@ -1,15 +1,28 @@
 package br.com.gew.smartplan.model;
 
 
-public class Evento {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+import java.util.List;
+
+public class Evento implements Serializable {
+
+    @JsonProperty("id")
     private Long id;
+    @JsonProperty("nome")
     private String nome;
+    @JsonProperty("descricao")
     private String descricao;
-    private Character tipo;
+    @JsonProperty("tipo")
+    private Integer tipo;
+    @JsonProperty("data_evento")
     private String dataEvento;
 
-    public Evento(String nome, String descricao, Character tipo, String dataEvento) {
+    public Evento(){ super(); }
+
+    public Evento(String nome, String descricao, Integer tipo, String dataEvento) {
+        super();
         this.nome = nome;
         this.descricao = descricao;
         this.tipo = tipo;
@@ -40,11 +53,11 @@ public class Evento {
         this.descricao = descricao;
     }
 
-    public Character getTipo() {
+    public Integer getTipo() {
         return tipo;
     }
 
-    public void setTipo(Character tipo) {
+    public void setTipo(Integer tipo) {
         this.tipo = tipo;
     }
 
