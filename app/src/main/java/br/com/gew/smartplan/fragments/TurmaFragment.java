@@ -64,16 +64,18 @@ public class TurmaFragment extends Fragment {
 
         try {
             turmas = new GetTurmas().execute(id).get();
-            Log.d("DEBUG:", turmas.toString());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
-        TurmaAdapter adapter = new TurmaAdapter(getContext(), turmas);
-        rvTurmas.setAdapter(adapter);
-        rvTurmas.setLayoutManager(new LinearLayoutManager(getContext()));
+        if(turmas != null){
+            TurmaAdapter adapter = new TurmaAdapter(getContext(), turmas);
+            rvTurmas.setAdapter(adapter);
+            rvTurmas.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
+        else Utils.showMessage(getContext(), "Tá vazio", 0);
     }
 
     private class GetTurmas extends AsyncTask<Long, Void, List<Turma>>{

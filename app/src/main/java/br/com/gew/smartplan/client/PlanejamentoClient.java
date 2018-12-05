@@ -42,4 +42,9 @@ public class PlanejamentoClient {
         }
         return null;
     }
+
+    public void delete(Long id){
+        String url = Utils.BASE_URL + "planejamento/" + id;
+        rt.delete(url);
+    }
 }

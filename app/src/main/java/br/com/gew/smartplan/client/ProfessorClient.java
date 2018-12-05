@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 import br.com.gew.smartplan.helpers.Utils;
+import br.com.gew.smartplan.model.Planejamento;
 import br.com.gew.smartplan.model.Professor;
 import br.com.gew.smartplan.model.Turma;
 
@@ -75,12 +76,25 @@ public class ProfessorClient {
         return false;
     }
 
+    public List<Planejamento> getPlanejamentosByProfessorId(Long id){
+        String url = Utils.BASE_URL + "professor/" + id + "/planejamentos";
+        List<Planejamento> planejamentos = null;
+        try {
+            planejamentos = rt.exchange(url, HttpMethod.GET, null,
+                    new ParameterizedTypeReference<List<Planejamento>>() {}).getBody();
+        }
+        catch (RestClientException e){
+            e.printStackTrace();
+        }
+        return planejamentos;
+    }
+
     public List<Turma> getTurmasByProfessorId(Long id){
         String url = Utils.BASE_URL + "professor/" + id + "/turmas";
         List<Turma> turmas = null;
         try{
-            turmas = rt.exchange(url, HttpMethod.GET,
-                    null, new ParameterizedTypeReference<List<Turma>>(){}).getBody();
+            turmas = rt.exchange(url, HttpMethod.GET, null,
+                    new ParameterizedTypeReference<List<Turma>>(){}).getBody();
         }
         catch (RestClientException e){
             e.printStackTrace();

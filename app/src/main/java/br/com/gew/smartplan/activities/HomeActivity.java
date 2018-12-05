@@ -79,15 +79,21 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_logout:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Deseja realmente sair?").setPositiveButton(R.string.sim, (dialog, which) -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                builder.setTitle("Fazendo logout...");
+                builder.setIcon(R.drawable.ic_aviso);
+                builder.setCancelable(false);
+                builder.setMessage("Você deseja realmente sair?");
+                builder.setPositiveButton(R.string.sim, (dialog, which) -> {
                     getSharedPreferences("UserPreferences", MODE_PRIVATE).edit().clear().apply();
                     Intent mainActivity = new Intent(HomeActivity.this, MainActivity.class);
                     startActivity(mainActivity);
                     finish();
                 })
                 .setNegativeButton(R.string.nao, (dialog, which) -> {});
-                builder.show();
+
+                AlertDialog alrt = builder.create();
+                alrt.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

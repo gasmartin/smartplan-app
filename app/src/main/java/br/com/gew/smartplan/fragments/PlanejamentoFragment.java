@@ -3,6 +3,7 @@ package br.com.gew.smartplan.fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +24,8 @@ import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.activities.AddPlanejamentoActivity;
 import br.com.gew.smartplan.activities.HomeActivity;
 import br.com.gew.smartplan.adapters.PlanejamentoAdapter;
+import br.com.gew.smartplan.client.PlanejamentoClient;
+import br.com.gew.smartplan.client.ProfessorClient;
 import br.com.gew.smartplan.model.Planejamento;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -58,14 +61,13 @@ public class PlanejamentoFragment extends Fragment {
         SharedPreferences preferences = getContext().getSharedPreferences("UserPreferences", MODE_PRIVATE);
         Long id = preferences.getLong("professor_id", 0);
 
-        List<Planejamento> planejamentoList = new ArrayList<>();
-
-        //Retornar lista
-
-        insert = view.findViewById(R.id.insert);
-        insert.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), AddPlanejamentoActivity.class));
-        });
+        try {
+            planejamentos = new GetPlanejamentos().execute(id).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
         if(planejamentos != null){
             PlanejamentoAdapter adapter = new PlanejamentoAdapter(getContext(), planejamentos);
@@ -74,6 +76,30 @@ public class PlanejamentoFragment extends Fragment {
         }
         else{
             Toast.makeText(getContext(), "Tá vazio, jão", Toast.LENGTH_SHORT).show();
+        }
+
+        insert = view.findViewById(R.id.insert);
+        insert.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), AddPlanejamentoActivity.class));
+        });
+    }
+
+    private class GetPlanejamentos extends AsyncTask<Long, Void, List<Planejamento>>{
+        @Override
+        protected List<Planejamento> doInBackground(Long... longs) {
+            return new ProfessorClient().getPlanejamentosByProfessorId(longs[0]);
+        }
+        @Override
+        protected void onPostExecute(List<Planejamento> planejamentos) {
+            super.onPostExecute(planejamentos);
+        }
+    }
+
+    public static class DeletePlanejamento extends AsyncTask<Long, Void, Void>{
+        @Override
+        protected Void doInBackground(Long... longs) {
+            new PlanejamentoClient().delete(longs[0]);
+            return null;
         }
     }
 }

@@ -16,7 +16,7 @@ public class Evento implements Serializable {
     private String descricao;
     @JsonProperty("tipo")
     private Integer tipo;
-    @JsonProperty("data_evento")
+    @JsonProperty("dataEvento")
     private String dataEvento;
 
     public Evento(){ super(); }

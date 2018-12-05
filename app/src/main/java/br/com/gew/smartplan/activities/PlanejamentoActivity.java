@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.CalendarView;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -19,7 +21,7 @@ public class PlanejamentoActivity extends AppCompatActivity {
     private Planejamento planejamento;
     private List<Evento> eventos;
 
-    public com.applandeo.materialcalendarview.CalendarView calendarView;
+    private CalendarView calendar;
 
     private Long id;
 
@@ -28,7 +30,7 @@ public class PlanejamentoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planejamento);
 
-        calendarView = findViewById(R.id.calendar);
+        calendar = findViewById(R.id.calendar);
 
         SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         id = preferences.getLong("professor_id", 0);
@@ -45,11 +47,6 @@ public class PlanejamentoActivity extends AppCompatActivity {
 
         min.setTime(Utils.stringToDate(planejamento.getDataInicio()));
         max.setTime(Utils.stringToDate(planejamento.getDataFinal()));
-
-        calendarView.setMinimumDate(min);
-        calendarView.setMaximumDate(max);
-
-        calendarView.setEvents(Utils.toEventDay(getBaseContext(), eventos));
     }
 
     @Override
