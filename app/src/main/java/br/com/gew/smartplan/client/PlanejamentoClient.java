@@ -16,7 +16,7 @@ public class PlanejamentoClient {
 
     private RestTemplate rt = new RestTemplate();
 
-    public Planejamento insert(Long id, Planejamento planejamento){
+    public Planejamento insert(String id, Planejamento planejamento){
         String url = Utils.BASE_URL + "planejamento/insert/" + id;
 
         try{
@@ -43,7 +43,7 @@ public class PlanejamentoClient {
         return null;
     }
 
-    public void delete(Long id){
+    public void delete(String id){
         String url = Utils.BASE_URL + "planejamento/" + id;
         rt.delete(url);
     }

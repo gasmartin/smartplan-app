@@ -13,16 +13,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.activities.PlanejamentoActivity;
 import br.com.gew.smartplan.fragments.PlanejamentoFragment;
 import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Planejamento;
+import br.com.gew.smartplan.task.PlanejamentoTask;
 
 public class PlanejamentoAdapter extends RecyclerView.Adapter<PlanejamentoAdapter.ViewHolder>{
 
@@ -51,17 +54,24 @@ public class PlanejamentoAdapter extends RecyclerView.Adapter<PlanejamentoAdapte
         holder.nome.setText(p.getNome());
         holder.range.setText(p.getDataInicio() + " - " + p.getDataFinal());
         holder.constraintLayout.setOnClickListener(v -> { context.startActivity(new Intent(context, PlanejamentoActivity.class).putExtra("planejamento", p)); });
-        holder.constraintLayout.setOnLongClickListener(v -> {
-            AlertDialog.Builder b = new AlertDialog.Builder(context);
-            b.setTitle("Excluindo...");
-            b.setMessage("Deseja realmente excluir esse item?");
-            b.setCancelable(false);
-            b.setPositiveButton("Sim", (dialog, which) -> {
-                new PlanejamentoFragment.DeletePlanejamento().execute(p.getId());
-            }).setNegativeButton("Não", (dialog, which) -> {});
-            AlertDialog alrt = b.create();
-            alrt.show();
-            return false;
+        holder.update.setOnClickListener(view -> {
+            //AÇÃO DE UPDATE
+        });
+        holder.delete.setOnClickListener(view -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Deletando planejamento...");
+            builder.setMessage("Você deseja deletar este planejamento?");
+            builder.setPositiveButton("Sim", (dialogInterface, i) -> {
+                try {
+                    new PlanejamentoTask.DeletePlanejamento().execute(Long.toString(p.getId())).get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }).setNegativeButton("Não", (dialogInterface, i) -> {});
+            AlertDialog alert = builder.create();
+            alert.show();
         });
     }
 
@@ -75,12 +85,16 @@ public class PlanejamentoAdapter extends RecyclerView.Adapter<PlanejamentoAdapte
         private ConstraintLayout constraintLayout;
         private TextView nome;
         private TextView range;
+        private ImageButton update;
+        private ImageButton delete;
 
         public ViewHolder(View itemView) {
             super(itemView);
             constraintLayout = itemView.findViewById(R.id.plan_layout);
             nome = itemView.findViewById(R.id.plan_nome);
             range = itemView.findViewById(R.id.plan_range);
+            update = itemView.findViewById(R.id.update);
+            delete = itemView.findViewById(R.id.delete);
         }
     }
 }

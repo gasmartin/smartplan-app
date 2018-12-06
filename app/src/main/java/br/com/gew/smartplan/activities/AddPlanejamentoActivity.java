@@ -18,6 +18,7 @@ import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.client.PlanejamentoClient;
 import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Planejamento;
+import br.com.gew.smartplan.task.PlanejamentoTask;
 
 public class AddPlanejamentoActivity extends AppCompatActivity {
 
@@ -47,7 +48,7 @@ public class AddPlanejamentoActivity extends AppCompatActivity {
         insert.setOnClickListener(v -> {
             Planejamento planejamento = null;
             try {
-                planejamento = new AddPlanejamento().execute(txtNome.getText().toString(), txtDescricao.getText().toString(),
+                planejamento = new PlanejamentoTask.InsertPlanejamento().execute(txtNome.getText().toString(), txtDescricao.getText().toString(),
                         dataInicio.getText().toString(), dataFinal.getText().toString()).get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -99,14 +100,4 @@ public class AddPlanejamentoActivity extends AppCompatActivity {
         }
     }
 
-    private class AddPlanejamento extends AsyncTask<String, Void, Planejamento>{
-        @Override
-        protected Planejamento doInBackground(String... strings) {
-            return new PlanejamentoClient().insert(id, new Planejamento(strings[0], strings[1], strings[2], strings[3], null));
-        }
-        @Override
-        protected void onPostExecute(Planejamento p) {
-            super.onPostExecute(p);
-        }
-    }
 }

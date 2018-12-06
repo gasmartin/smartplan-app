@@ -27,6 +27,7 @@ import br.com.gew.smartplan.adapters.PlanejamentoAdapter;
 import br.com.gew.smartplan.client.PlanejamentoClient;
 import br.com.gew.smartplan.client.ProfessorClient;
 import br.com.gew.smartplan.model.Planejamento;
+import br.com.gew.smartplan.task.PlanejamentoTask;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -62,7 +63,7 @@ public class PlanejamentoFragment extends Fragment {
         Long id = preferences.getLong("professor_id", 0);
 
         try {
-            planejamentos = new GetPlanejamentos().execute(id).get();
+            planejamentos = new PlanejamentoTask.GetPlanejamentos().execute(id).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -84,22 +85,4 @@ public class PlanejamentoFragment extends Fragment {
         });
     }
 
-    private class GetPlanejamentos extends AsyncTask<Long, Void, List<Planejamento>>{
-        @Override
-        protected List<Planejamento> doInBackground(Long... longs) {
-            return new ProfessorClient().getPlanejamentosByProfessorId(longs[0]);
-        }
-        @Override
-        protected void onPostExecute(List<Planejamento> planejamentos) {
-            super.onPostExecute(planejamentos);
-        }
-    }
-
-    public static class DeletePlanejamento extends AsyncTask<Long, Void, Void>{
-        @Override
-        protected Void doInBackground(Long... longs) {
-            new PlanejamentoClient().delete(longs[0]);
-            return null;
-        }
-    }
 }
