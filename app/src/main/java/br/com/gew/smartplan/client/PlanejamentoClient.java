@@ -43,6 +43,32 @@ public class PlanejamentoClient {
         return null;
     }
 
+    public void update(Planejamento planejamento){
+        String url = Utils.BASE_URL + "planejamento/" + planejamento.getId();
+
+        try{
+            rt.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+            JSONObject json = new JSONObject();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            json.put("nome", planejamento.getNome());
+            json.put("descricao", planejamento.getDescricao());
+            json.put("dataInicio", planejamento.getDataInicio());
+            json.put("dataFinal", planejamento.getDataFinal());
+
+            HttpEntity<String> entity = new HttpEntity<>(json.toString(), headers);
+
+            rt.put(url, entity);
+        }
+        catch (RestClientException ex){
+            ex.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void delete(String id){
         String url = Utils.BASE_URL + "planejamento/" + id;
         rt.delete(url);

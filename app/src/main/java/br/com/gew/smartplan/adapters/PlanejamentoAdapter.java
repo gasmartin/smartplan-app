@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import br.com.gew.smartplan.R;
+import br.com.gew.smartplan.activities.AddPlanejamentoActivity;
 import br.com.gew.smartplan.activities.PlanejamentoActivity;
 import br.com.gew.smartplan.fragments.PlanejamentoFragment;
 import br.com.gew.smartplan.helpers.Utils;
@@ -53,9 +54,15 @@ public class PlanejamentoAdapter extends RecyclerView.Adapter<PlanejamentoAdapte
         Planejamento p = planejamentos.get(position);
         holder.nome.setText(p.getNome());
         holder.range.setText(p.getDataInicio() + " - " + p.getDataFinal());
-        holder.constraintLayout.setOnClickListener(v -> { context.startActivity(new Intent(context, PlanejamentoActivity.class).putExtra("planejamento", p)); });
+        holder.constraintLayout.setOnClickListener(v -> {
+            Intent planejamentoActivity = new Intent(context, PlanejamentoActivity.class);
+            planejamentoActivity.putExtra("planejamento", p);
+            context.startActivity(planejamentoActivity);
+        });
         holder.update.setOnClickListener(view -> {
-            //AÇÃO DE UPDATE
+            Intent alterar = new Intent(context, AddPlanejamentoActivity.class);
+            alterar.putExtra("planejamento", p);
+            context.startActivity(alterar);
         });
         holder.delete.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -69,6 +76,8 @@ public class PlanejamentoAdapter extends RecyclerView.Adapter<PlanejamentoAdapte
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
+                planejamentos.remove(p);
+                notifyItemChanged(position);
             }).setNegativeButton("Não", (dialogInterface, i) -> {});
             AlertDialog alert = builder.create();
             alert.show();

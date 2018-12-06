@@ -32,6 +32,14 @@ public class PlanejamentoTask {
         }
     }
 
+    public static class UpdatePlanejamento extends AsyncTask<Planejamento, Void, Void>{
+        @Override
+        protected Void doInBackground(Planejamento... planejamentos) {
+            new PlanejamentoClient().update(planejamentos[0]);
+            return null;
+        }
+    }
+
     public static class DeletePlanejamento extends AsyncTask<String, Void, Void>{
         @Override
         protected Void doInBackground(String... strings) {

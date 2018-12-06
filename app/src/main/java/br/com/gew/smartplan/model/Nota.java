@@ -1,8 +1,12 @@
 package br.com.gew.smartplan.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Nota {
 
+    @JsonProperty("id")
     private Long id;
+    @JsonProperty("nota")
     private Double nota;
 
     public Nota(Double nota) {

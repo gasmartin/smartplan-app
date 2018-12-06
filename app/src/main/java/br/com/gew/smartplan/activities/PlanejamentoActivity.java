@@ -30,7 +30,7 @@ public class PlanejamentoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planejamento);
 
-        calendar = findViewById(R.id.calendar);
+        //calendar = findViewById(R.id.calendar);
 
         SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         id = preferences.getLong("professor_id", 0);

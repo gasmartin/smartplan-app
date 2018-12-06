@@ -25,6 +25,7 @@ import br.com.gew.smartplan.adapters.TurmaAdapter;
 import br.com.gew.smartplan.client.ProfessorClient;
 import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Turma;
+import br.com.gew.smartplan.task.TurmaTask;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -63,7 +64,7 @@ public class TurmaFragment extends Fragment {
         id = preferences.getLong("professor_id", 0);
 
         try {
-            turmas = new GetTurmas().execute(id).get();
+            turmas = new TurmaTask.GetTurmas().execute(id).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -76,16 +77,5 @@ public class TurmaFragment extends Fragment {
             rvTurmas.setLayoutManager(new LinearLayoutManager(getContext()));
         }
         else Utils.showMessage(getContext(), "Tá vazio", 0);
-    }
-
-    private class GetTurmas extends AsyncTask<Long, Void, List<Turma>>{
-        @Override
-        protected List<Turma> doInBackground(Long... longs) {
-            return new ProfessorClient().getTurmasByProfessorId(longs[0]);
-        }
-        @Override
-        protected void onPostExecute(List<Turma> turmas) {
-            super.onPostExecute(turmas);
-        }
     }
 }

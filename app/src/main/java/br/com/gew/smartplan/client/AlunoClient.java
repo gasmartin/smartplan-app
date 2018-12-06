@@ -26,7 +26,6 @@ public class AlunoClient {
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             json.put("nome", aluno.getNome());
-            json.put("obs", aluno.getObs());
             json.put("email", aluno.getEmail());
 
             HttpEntity<String> entity = new HttpEntity<>(json.toString(), headers);
@@ -42,7 +41,7 @@ public class AlunoClient {
         return aluno;
     }
 
-    public boolean putAluno(Long id, Aluno aluno){
+    public boolean update(Long id, Aluno aluno){
         String url = Utils.BASE_URL + "aluno/" + id;
         try{
             JSONObject json = new JSONObject();
@@ -50,7 +49,6 @@ public class AlunoClient {
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             json.put("nome", aluno.getNome());
-            json.put("obs", aluno.getObs());
             json.put("email", aluno.getEmail());
 
             HttpEntity<String> entity = new HttpEntity<>(json.toString(), headers);
