@@ -53,4 +53,5 @@ dependencies {
 
     //CircularImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.android.support:gridlayout-v7:27.1.1'
 }

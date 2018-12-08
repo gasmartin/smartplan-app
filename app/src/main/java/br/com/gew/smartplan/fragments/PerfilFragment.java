@@ -9,8 +9,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.concurrent.ExecutionException;
 
 import br.com.gew.smartplan.R;
+import br.com.gew.smartplan.model.Professor;
+import br.com.gew.smartplan.task.ProfessorTask;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -18,6 +24,13 @@ import static android.content.Context.MODE_PRIVATE;
  * A simple {@link Fragment} subclass.
  */
 public class PerfilFragment extends Fragment {
+
+    private CircleImageView img;
+    private TextView nome;
+    private TextView email;
+    private TextView totalPlanejamentos;
+    private TextView totalTurmas;
+    private TextView totalAlunos;
 
     private long id;
 
@@ -39,5 +52,25 @@ public class PerfilFragment extends Fragment {
 
         SharedPreferences preferences = getActivity().getSharedPreferences("UserPreferences", MODE_PRIVATE);
         this.id = preferences.getLong("professor_id", 0);
+
+        img = view.findViewById(R.id.img_professor);
+        nome = view.findViewById(R.id.nome_professor);
+        email = view.findViewById(R.id.email_professor);
+        totalPlanejamentos = view.findViewById(R.id.number_planejamentos);
+        totalTurmas = view.findViewById(R.id.number_turmas);
+        totalAlunos = view.findViewById(R.id.number_alunos);
+
+        Professor professor = null;
+
+        try {
+            professor = new ProfessorTask.GetProfessor().execute(id).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        nome.setText(professor.getNome());
+        email.setText(professor.getEmail());
     }
 }
