@@ -47,4 +47,12 @@ public class PlanejamentoTask {
             return null;
         }
     }
+
+    public static class CountPlanejamento extends AsyncTask<String, Void, Integer>{
+        @Override
+        protected Integer doInBackground(String... strings) {
+            return new PlanejamentoClient().count(strings[0]);
+        }
+    }
+
 }

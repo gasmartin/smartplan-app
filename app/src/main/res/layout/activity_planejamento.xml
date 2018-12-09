@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.PlanejamentoActivity"
-    tools:layout_editor_absoluteY="81dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-</ScrollView>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        app:tabIndicatorColor="@color/colorPrimary">
+
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabCalendario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calendário" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabEventos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eventos" />
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

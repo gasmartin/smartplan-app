@@ -49,9 +49,9 @@ public class ProfessorClient {
         return null;
     }
 
-    public boolean alterarDados(Long id, Professor professor){
+    public boolean alterarDados(Professor professor){
 
-        String url = Utils.BASE_URL + "professor/" + id;
+        String url = Utils.BASE_URL + "professor/" + professor.getId();
 
         try{
             JSONObject json = new JSONObject();

@@ -53,5 +53,7 @@ dependencies {
 
     //CircularImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-    implementation 'com.android.support:gridlayout-v7:27.1.1'
+
+    //Calendar
+    implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
 }

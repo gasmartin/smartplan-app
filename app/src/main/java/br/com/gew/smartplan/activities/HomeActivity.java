@@ -19,6 +19,7 @@ import br.com.gew.smartplan.R;
 import br.com.gew.smartplan.fragments.PerfilFragment;
 import br.com.gew.smartplan.fragments.PlanejamentoFragment;
 import br.com.gew.smartplan.fragments.TurmaFragment;
+import br.com.gew.smartplan.model.Planejamento;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -59,11 +60,14 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(selectedFragment instanceof  TurmaFragment){
+        if(selectedFragment instanceof TurmaFragment){
             selectedFragment = new TurmaFragment();
         }
-        else {
+        else if( selectedFragment instanceof PlanejamentoFragment){
             selectedFragment = new PlanejamentoFragment();
+        }
+        else{
+            selectedFragment = new PerfilFragment();
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
     }

@@ -88,4 +88,17 @@ public class TurmaClient {
         String url = Utils.BASE_URL + "turma/" + id;
         rt.delete(url);
     }
+
+    public Integer count(String id) {
+        String url = Utils.BASE_URL + "professor/" + id + "/turmas/count";
+        Integer number = 0;
+        try{
+            number = rt.exchange(url, HttpMethod.GET,
+                    null, new ParameterizedTypeReference<Integer>() {}).getBody();
+        }
+        catch (RestClientException ex){
+            ex.printStackTrace();
+        }
+        return number;
+    }
 }

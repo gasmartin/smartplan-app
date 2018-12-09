@@ -13,4 +13,12 @@ public class ProfessorTask {
             return new ProfessorClient().getProfessor(longs[0]);
         }
     }
+
+    public static class PutProfessor extends AsyncTask<Professor, Void, Void>{
+        @Override
+        protected Void doInBackground(Professor... professores) {
+            new ProfessorClient().alterarDados(professores[0]);
+            return null;
+        }
+    }
 }

@@ -2,8 +2,10 @@ package br.com.gew.smartplan.client;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestClientException;
@@ -68,5 +70,18 @@ public class AlunoClient {
     public void deleteAluno(Long id){
         String url = Utils.BASE_URL + "aluno/" + id;
         rt.delete(url);
+    }
+
+    public Integer count(String id) {
+        String url = Utils.BASE_URL + "professor/" + id + "/turmas/alunos/count";
+        Integer number = 0;
+        try{
+            number = rt.exchange(url, HttpMethod.GET,
+                    null, new ParameterizedTypeReference<Integer>() {}).getBody();
+        }
+        catch (RestClientException ex){
+            ex.printStackTrace();
+        }
+        return number;
     }
 }

@@ -47,4 +47,11 @@ public class TurmaTask {
             return null;
         }
     }
+
+    public static class CountTurma extends AsyncTask<String, Void, Integer>{
+        @Override
+        protected Integer doInBackground(String... strings) {
+            return new TurmaClient().count(strings[0]);
+        }
+    }
 }
