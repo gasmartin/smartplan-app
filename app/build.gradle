@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "br.com.gew.smartplan"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -54,6 +54,6 @@ dependencies {
     //CircularImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
-    //Calendar
-    implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
+    //Material CalendarView
+    implementation "com.github.prolificinteractive:material-calendarview:2.0.0"
 }

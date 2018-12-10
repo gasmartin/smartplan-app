@@ -5,4 +5,5 @@
     <color name="colorAccent">#0099ff</color>
     <color name="error">#B00020</color>
     <color name="viewBg">#FFFFFF</color>
+    <color name="green">#90ee02</color>
 </resources>

@@ -25,8 +25,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private Fragment selectedFragment = null;
 
-    FloatingActionButton btn;
-
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
                 switch (item.getItemId()) {
@@ -40,7 +38,6 @@ public class HomeActivity extends AppCompatActivity {
                         selectedFragment = new PerfilFragment();
                         break;
                 }
-
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                 return true;
             };
@@ -63,10 +60,10 @@ public class HomeActivity extends AppCompatActivity {
         if(selectedFragment instanceof TurmaFragment){
             selectedFragment = new TurmaFragment();
         }
-        else if( selectedFragment instanceof PlanejamentoFragment){
+        else if(selectedFragment instanceof PlanejamentoFragment){
             selectedFragment = new PlanejamentoFragment();
         }
-        else{
+        else if(selectedFragment instanceof PerfilFragment){
             selectedFragment = new PerfilFragment();
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
@@ -95,7 +92,6 @@ public class HomeActivity extends AppCompatActivity {
                     finish();
                 })
                 .setNegativeButton(R.string.nao, (dialog, which) -> {});
-
                 AlertDialog alrt = builder.create();
                 alrt.show();
                 return true;

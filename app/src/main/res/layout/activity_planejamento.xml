@@ -13,7 +13,6 @@
         app:tabMode="fixed"
         app:tabIndicatorColor="@color/colorPrimary">
 
-
         <android.support.design.widget.TabItem
             android:id="@+id/tabCalendario"
             android:layout_width="wrap_content"

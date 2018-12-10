@@ -24,6 +24,7 @@ import br.com.gew.smartplan.helpers.Utils;
 import br.com.gew.smartplan.model.Professor;
 import br.com.gew.smartplan.model.Usuario;
 import br.com.gew.smartplan.task.ProfessorTask;
+import br.com.gew.smartplan.task.UsuarioTask;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -36,6 +37,8 @@ public class CadastroActivity extends AppCompatActivity {
     private TextView labelUsername;
     private TextView labelPassword;
     private TextView labelConfirm;
+
+    private Bundle extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,7 @@ public class CadastroActivity extends AppCompatActivity {
         labelConfirm = findViewById(R.id.label_confirm);
         btnCadastrar = findViewById(R.id.btnCadastrar);
 
-        Bundle extras = getIntent().getExtras();
+        extras = getIntent().getExtras();
         if(extras == null){
             btnCadastrar.setOnClickListener(v -> {
                 if (!"".equals(txtNome.getText().toString()) || !"".equals(txtUser.getText().toString()) ||
@@ -64,7 +67,7 @@ public class CadastroActivity extends AppCompatActivity {
 
                         Professor p = null;
                         try {
-                            p = new AddProfessor().execute(txtNome.getText().toString(), txtEmail.getText().toString()).get();
+                            p = new ProfessorTask.AddProfessor().execute(txtNome.getText().toString(), txtEmail.getText().toString()).get();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         } catch (ExecutionException e) {
@@ -74,7 +77,7 @@ public class CadastroActivity extends AppCompatActivity {
                         if (p != null) {
                             Usuario u = null;
                             try {
-                                u = new AddUsuario().execute(Long.toString(p.getId()), txtUser.getText().toString(), txtSenha.getText().toString()).get();
+                                u = new UsuarioTask.AddUsuario().execute(Long.toString(p.getId()), txtUser.getText().toString(), txtSenha.getText().toString()).get();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             } catch (ExecutionException e) {
@@ -157,9 +160,12 @@ public class CadastroActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent mainActivity = new Intent(this, MainActivity.class);
-                startActivity(mainActivity);
-                finish();
+                if(extras == null){
+                    Intent mainActivity = new Intent(this, MainActivity.class);
+                    startActivity(mainActivity);
+                    finish();
+                }
+                else finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -173,30 +179,5 @@ public class CadastroActivity extends AppCompatActivity {
         finish();
     }
 
-    private class AddProfessor extends AsyncTask<String, Void, Professor> {
-
-        @Override
-        protected Professor doInBackground(String... strings) {
-            return new ProfessorClient().cadastrar(new Professor(strings[0], strings[1]));
-        }
-
-        @Override
-        protected void onPostExecute(Professor p) {
-            super.onPostExecute(p);
-        }
-    }
-
-    private class AddUsuario extends AsyncTask<String, Void, Usuario> {
-
-        @Override
-        protected Usuario doInBackground(String... strings) {
-            return new UsuarioClient().insert(strings[0], new Usuario(strings[1], strings[2]));
-        }
-
-        @Override
-        protected void onPostExecute(Usuario u) {
-            super.onPostExecute(u);
-        }
-    }
 }
 
